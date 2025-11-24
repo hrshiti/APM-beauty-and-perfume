@@ -647,38 +647,48 @@ const adminService = {
   getUserAnalytics: async (period = 'monthly') => {
     await delay(300);
     
+    // Calculate period multiplier for different time periods
+    const periodMultiplier = {
+      daily: 0.03,    // ~1/30 of monthly
+      monthly: 1,     // Base value
+      yearly: 12      // 12x monthly
+    };
+    const multiplier = periodMultiplier[period] || 1;
+    
     // Calculate stats from mock data
     const totalUsers = mockUsers.length;
     const registeredUsers = mockUsers.length;
     const activeRegisteredUsers = mockUsers.filter(u => u.isActive).length;
     const registeredButNotLoggedIn = registeredUsers - activeRegisteredUsers;
     
-    // Mock activity data
-    const totalActivities = 361;
+    // Mock activity data (adjusted by period)
+    const totalActivities = Math.round(361 * multiplier);
     const activityCounts = {
-      add_to_cart: 0,
-      category_visit: 40,
-      product_view: 16
+      add_to_cart: Math.round(0 * multiplier),
+      category_visit: Math.round(40 * multiplier),
+      product_view: Math.round(16 * multiplier)
     };
     
-    // Mock popular categories based on mockCategories
+    // Mock popular categories based on mockCategories (adjusted by period)
+    const baseCategoryVisits = [13, 12, 5, 4, 4, 2];
     const popularCategories = mockCategories.slice(0, 6).map((cat, index) => ({
       categoryId: cat._id,
       categoryName: cat.name,
-      visitCount: [13, 12, 5, 4, 4, 2][index] || 1
+      visitCount: Math.round((baseCategoryVisits[index] || 1) * multiplier)
     }));
     
-    // Mock most viewed products
+    // Mock most viewed products (adjusted by period)
+    const baseProductViews = [5, 4, 3, 2, 2];
     const mostViewedProducts = mockProducts.slice(0, 5).map((product, index) => ({
       productId: product._id,
       productName: product.name,
       category: product.categoryName,
-      viewCount: [5, 4, 3, 2, 2][index] || 1
+      viewCount: Math.round((baseProductViews[index] || 1) * multiplier)
     }));
     
-    // Mock engagement data
-    const registeredUserEngagement = activeRegisteredUsers;
-    const activeAnonymousUsers = 16; // Mock anonymous users
+    // Mock engagement data (adjusted by period)
+    const registeredUserEngagement = Math.round(activeRegisteredUsers * multiplier);
+    const activeAnonymousUsers = Math.round(16 * multiplier); // Mock anonymous users
     const anonymousUserEngagement = activeAnonymousUsers;
     const totalEngagement = registeredUserEngagement + anonymousUserEngagement;
     
