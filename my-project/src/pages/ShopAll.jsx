@@ -286,12 +286,15 @@ const ShopAll = () => {
                   
                   {/* Product Image Container */}
                   <div className="relative px-3 pb-2">
-                    <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="max-w-full max-h-full object-contain p-2"
-                      />
+                    <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden">
+                      <div className="w-full h-full flex items-center justify-center p-2">
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="max-w-full max-h-full w-auto h-auto object-contain"
+                          style={{ maxWidth: '100%', maxHeight: '100%' }}
+                        />
+                      </div>
                       
                       {/* BESTSELLER Badge - Top Left */}
                       {product.tag && (

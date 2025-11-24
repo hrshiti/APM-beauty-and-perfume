@@ -191,11 +191,12 @@ const CrazyDeals = () => {
                     {/* Golden base circle */}
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
                     {/* Products on pedestal */}
-                    <div className="absolute inset-2 flex items-center justify-center">
+                    <div className="absolute inset-2 flex items-center justify-center overflow-hidden">
                       <img 
                         src={card.image} 
                         alt={card.title}
-                        className="max-w-full max-h-full object-contain"
+                        className="max-w-full max-h-full w-auto h-auto object-contain"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
                       />
                     </div>
                   </div>

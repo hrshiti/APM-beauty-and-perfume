@@ -468,12 +468,15 @@ const Home = () => {
               
               {/* Product Image Container */}
               <div className="relative px-3 pb-2">
-                <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="max-w-full max-h-full object-contain p-2"
-                  />
+                <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden">
+                  <div className="w-full h-full flex items-center justify-center p-2">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                      style={{ maxWidth: '100%', maxHeight: '100%' }}
+                    />
+                  </div>
                   
                   {/* BESTSELLER Badge - Top Left */}
                   {product.tag && (
@@ -662,30 +665,33 @@ const Home = () => {
               className="bg-gray-100 rounded-xl overflow-hidden hover:shadow-md transition cursor-pointer"
             >
               {/* Image Container */}
-              <div className="relative w-full h-48 md:h-56 bg-gray-100 flex items-center justify-center p-4 overflow-hidden">
+              <div className="relative w-full h-48 md:h-56 bg-gray-100 overflow-hidden">
                 {category.hasMultipleImages ? (
-                  <div className="flex items-center justify-center gap-2 w-full h-full">
-                    <div className="w-24 h-32 bg-white rounded flex items-center justify-center overflow-hidden">
+                  <div className="flex items-center justify-center gap-2 w-full h-full p-4">
+                    <div className="w-24 h-32 bg-white rounded overflow-hidden flex items-center justify-center">
                       <img 
                         src={category.image1} 
                         alt={category.name}
-                        className="max-w-full max-h-full object-contain p-1"
+                        className="max-w-full max-h-full w-auto h-auto object-contain p-1"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
                       />
                     </div>
-                    <div className="w-24 h-32 bg-white rounded flex items-center justify-center overflow-hidden">
+                    <div className="w-24 h-32 bg-white rounded overflow-hidden flex items-center justify-center">
                       <img 
                         src={category.image2} 
                         alt={category.name}
-                        className="max-w-full max-h-full object-contain p-1"
+                        className="max-w-full max-h-full w-auto h-auto object-contain p-1"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-full h-full flex items-center justify-center p-4">
                     <img 
                       src={category.image} 
                       alt={category.name}
-                      className="max-w-full max-h-full object-contain p-2"
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                      style={{ maxWidth: '100%', maxHeight: '100%' }}
                     />
                   </div>
                 )}
@@ -797,11 +803,12 @@ const Home = () => {
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <div className="flex flex-row gap-4 md:gap-6 items-center p-3 md:p-6">
             {/* Product Image - Left */}
-            <div className="bg-gray-100 rounded-xl p-2 md:p-6 flex items-center justify-center flex-shrink-0 overflow-hidden w-24 md:w-48">
+            <div className="bg-gray-100 rounded-xl p-2 md:p-6 flex items-center justify-center flex-shrink-0 overflow-hidden w-24 md:w-48 h-24 md:h-64">
               <img 
                 src={img2721} 
                 alt="Alpha Perfume"
-                className="max-w-full max-h-24 md:max-h-64 object-contain"
+                className="max-w-full max-h-full w-auto h-auto object-contain"
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
               />
             </div>
             
@@ -871,11 +878,12 @@ const Home = () => {
               </div>
               
               {/* Product Image */}
-              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full overflow-hidden">
+              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full h-24 md:h-32 overflow-hidden">
                 <img 
                   src={img2723} 
                   alt="Self Care Kit"
-                  className="max-w-full max-h-24 md:max-h-32 object-contain"
+                  className="max-w-full max-h-full w-auto h-auto object-contain"
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
                 />
               </div>
               
@@ -899,11 +907,12 @@ const Home = () => {
               </div>
               
               {/* Product Image */}
-              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full overflow-hidden">
+              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full h-24 md:h-32 overflow-hidden">
                 <img 
                   src={img2725} 
                   alt="Self Love Kit"
-                  className="max-w-full max-h-24 md:max-h-32 object-contain"
+                  className="max-w-full max-h-full w-auto h-auto object-contain"
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
                 />
               </div>
               
@@ -1307,11 +1316,12 @@ const Home = () => {
             <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-20 rounded-lg overflow-hidden">
+                  <div className="w-16 h-20 rounded-lg overflow-hidden flex items-center justify-center">
                     <img 
                       src={img2711} 
                       alt="Zodiac Collection"
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                      style={{ maxWidth: '100%', maxHeight: '100%' }}
                     />
                   </div>
                   <div>
@@ -1577,11 +1587,12 @@ const Home = () => {
             <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-20 rounded-lg overflow-hidden">
+                  <div className="w-16 h-20 rounded-lg overflow-hidden flex items-center justify-center">
                     <img 
                       src={img2711} 
                       alt="Zodiac Collection"
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                      style={{ maxWidth: '100%', maxHeight: '100%' }}
                     />
                   </div>
                   <div>
@@ -1803,11 +1814,12 @@ const Home = () => {
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide" style={{ maxWidth: '100%' }}>
                       {recommendedProducts.map((product) => (
                         <div key={product.id} className="flex-shrink-0 w-40 bg-white border border-gray-200 rounded-xl overflow-hidden">
-                          <div className="w-full h-40 bg-gray-50 flex items-center justify-center p-2">
+                          <div className="w-full h-40 bg-gray-50 flex items-center justify-center p-2 overflow-hidden">
                             <img 
                               src={product.image} 
                               alt={product.name}
-                              className="max-w-full max-h-full object-contain"
+                              className="max-w-full max-h-full w-auto h-auto object-contain"
+                              style={{ maxWidth: '100%', maxHeight: '100%' }}
                             />
                           </div>
                           <div className="p-3">
@@ -1834,11 +1846,12 @@ const Home = () => {
                   <div className="space-y-4 mb-6">
                     {cartItems.map((item) => (
                       <div key={item.id} className="flex gap-4 border-b border-gray-200 pb-4">
-                        <div className="w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div className="w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
                           <img 
                             src={item.image} 
                             alt={item.name}
-                            className="max-w-full max-h-full object-contain p-2"
+                            className="max-w-full max-h-full w-auto h-auto object-contain p-2"
+                            style={{ maxWidth: '100%', maxHeight: '100%' }}
                           />
                         </div>
                         <div className="flex-1">
