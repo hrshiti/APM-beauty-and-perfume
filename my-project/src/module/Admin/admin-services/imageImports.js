@@ -1,23 +1,23 @@
 // Image imports for mock data
-// Importing all product images from assets/product folder
+// Importing all product images from assets/images vintage folder
 
-// Product images from assets/product folder
-import product1 from '../../../assets/product/1.jpg';
-import product2 from '../../../assets/product/2.jpg';
-import product2_1 from '../../../assets/product/2_1.jpg';
-import product3 from '../../../assets/product/3.jpg';
-import product3_1 from '../../../assets/product/3_1.jpg';
-import product4 from '../../../assets/product/4.jpg';
-import product4_1 from '../../../assets/product/4_1.jpg';
-import product4_2 from '../../../assets/product/4----2.jpg';
-import product5 from '../../../assets/product/5.jpg';
-import product5_1 from '../../../assets/product/5_1.jpg';
-import product6 from '../../../assets/product/6.jpg';
-import product7 from '../../../assets/product/7.jpg';
-import product8 from '../../../assets/product/8-222.jpg';
-import productIMG6487 from '../../../assets/product/IMG_6487.jpg';
-import productIMG6503 from '../../../assets/product/IMG_6503.jpg';
-import productIMG9720 from '../../../assets/product/IMG_9720.JPG';
+// Product images from assets/images vintage folder
+import product1 from '../../../assets/images vintage/1.jpg';
+import product2 from '../../../assets/images vintage/2.jpg';
+import product2_1 from '../../../assets/images vintage/2_1.jpg';
+import product3 from '../../../assets/images vintage/3.jpg';
+import product3_1 from '../../../assets/images vintage/3_1.jpg';
+import product4 from '../../../assets/images vintage/4.jpg';
+import product4_1 from '../../../assets/images vintage/4_1.jpg';
+import product4_2 from '../../../assets/images vintage/4----2.jpg';
+import product5 from '../../../assets/images vintage/5.jpg';
+import product5_1 from '../../../assets/images vintage/5_1.jpg';
+import product6 from '../../../assets/images vintage/6.jpg';
+import product7 from '../../../assets/images vintage/7.jpg';
+import product8 from '../../../assets/images vintage/8-222.jpg';
+import productIMG6487 from '../../../assets/images vintage/IMG_6487.jpg';
+import productIMG6503 from '../../../assets/images vintage/IMG_6503.jpg';
+import productIMG9720 from '../../../assets/images vintage/IMG_9720.JPG';
 
 // Export image mappings
 export const productImages = {

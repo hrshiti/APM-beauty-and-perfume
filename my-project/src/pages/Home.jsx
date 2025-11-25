@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-// Import images from assets folder
-import img2609 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2609.JPG';
-import img2610 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2610.JPG';
-import img2612 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2612.JPG';
-import img2616 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2616.JPG';
-import img2617 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2617.JPG';
-import img2618 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2618.JPG';
-import img2619 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2619.JPG';
-import img2638 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2638.JPG';
-import img2645 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2645.JPG';
-import img2648 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2648.JPG';
-import img2651 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2651.JPG';
-import img2653 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2653.JPG';
-import img2657 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2657.JPG';
-import img2669 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2669.JPG';
-import img2698 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2698.JPG';
-import img2700 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2700.JPG';
-import img2702 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2702.JPG';
-import img2703 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2703.JPG';
-import img2705 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2705.JPG';
-import img2707 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2707.JPG';
-import img2709 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2709.JPG';
-import img2711 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2711.JPG';
-import img2719 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2719.JPG';
-import img2721 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2721.JPG';
-import img2723 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2723.JPG';
-import img2725 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2725.JPG';
-import img2727 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2727.JPG';
-import img2728 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2728.JPG';
-import img2732 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2732.JPG';
+// Import images from assets vintage folder
+import img2609 from '../assets/images vintage/1.jpg';
+import img2610 from '../assets/images vintage/2.jpg';
+import img2612 from '../assets/images vintage/3.jpg';
+import img2616 from '../assets/images vintage/4.jpg';
+import img2617 from '../assets/images vintage/5.jpg';
+import img2618 from '../assets/images vintage/6.jpg';
+import img2619 from '../assets/images vintage/7.jpg';
+import img2638 from '../assets/images vintage/8-222.jpg';
+import img2645 from '../assets/images vintage/2_1.jpg';
+import img2648 from '../assets/images vintage/3_1.jpg';
+import img2651 from '../assets/images vintage/4_1.jpg';
+import img2653 from '../assets/images vintage/5_1.jpg';
+import img2657 from '../assets/images vintage/4----2.jpg';
+import img2669 from '../assets/images vintage/IMG_6487.jpg';
+import img2698 from '../assets/images vintage/IMG_6503.jpg';
+import img2700 from '../assets/images vintage/IMG_9720.JPG';
+import img2702 from '../assets/images vintage/1.jpg';
+import img2703 from '../assets/images vintage/2.jpg';
+import img2705 from '../assets/images vintage/3.jpg';
+import img2707 from '../assets/images vintage/4.jpg';
+import img2709 from '../assets/images vintage/5.jpg';
+import img2711 from '../assets/images vintage/6.jpg';
+import img2719 from '../assets/images vintage/7.jpg';
+import img2721 from '../assets/images vintage/8-222.jpg';
+import img2723 from '../assets/images vintage/2_1.jpg';
+import img2725 from '../assets/images vintage/3_1.jpg';
+import img2727 from '../assets/images vintage/4_1.jpg';
+import img2728 from '../assets/images vintage/5_1.jpg';
+import img2732 from '../assets/images vintage/IMG_6487.jpg';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('bestsellers');
@@ -305,8 +305,78 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 safe-area-inset-bottom overflow-x-hidden max-w-full w-full">
+      {/* Top Navbar - Only visible in webview - Fixed */}
+      <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-[100] w-full max-w-full">
+        <div className="container mx-auto px-6 py-4 max-w-full w-full">
+          <div className="flex items-center justify-between">
+            {/* Left side - Logo */}
+            <div className="flex-1 flex items-center">
+              <Link to="/" className="flex items-center">
+                <h1 className="text-xl font-bold text-gray-800">VINTAGE BEAUTY®</h1>
+              </Link>
+            </div>
+            
+            {/* Center - Navigation Links */}
+            <div className="flex-1 flex items-center justify-center">
+              <div className="flex items-center gap-6">
+                <Link to="/" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
+                  Home
+                </Link>
+                <Link to="/shop-all" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
+                  Shop All
+                </Link>
+                <Link to="/crazy-deals" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
+                  Crazy Deals
+                </Link>
+                <div className="relative group">
+                  <button className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200 flex items-center gap-1">
+                    Categories
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
+                <Link to="/account" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
+                  Account
+                </Link>
+              </div>
+            </div>
+
+            {/* Right side - Search, Support, Cart */}
+            <div className="flex-1 flex items-center justify-end gap-6">
+              {/* Search */}
+              <button className="text-gray-700 hover:text-purple-600 transition-colors duration-200">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+              
+              {/* Support */}
+              <a href="tel:+919876543210" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>Support</span>
+              </a>
+              
+              {/* Cart */}
+              <button className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200" onClick={() => setIsCartOpen(true)}>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {cartItems.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Top Black Header - Promotional Carousel */}
-      <div className="bg-black text-white py-2 relative overflow-hidden w-full max-w-full">
+      <div className="bg-black text-white py-2 relative overflow-hidden w-full max-w-full md:pt-[73px]">
         <div className="flex items-center justify-center relative w-full max-w-full">
           <button 
             className="absolute left-2 md:left-4 z-10 p-1"
@@ -469,14 +539,11 @@ const Home = () => {
               {/* Product Image Container */}
               <div className="relative px-3 pb-2">
                 <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center p-2">
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="max-w-full max-h-full w-auto h-auto object-contain"
-                      style={{ maxWidth: '100%', maxHeight: '100%' }}
-                    />
-                  </div>
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
                   
                   {/* BESTSELLER Badge - Top Left */}
                   {product.tag && (
@@ -571,9 +638,14 @@ const Home = () => {
             <div className="flex flex-row items-center justify-center gap-1 md:gap-2">
               {/* Left Bottle - OUD PARFUM */}
               <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-amber-900 rounded-xl mb-1 relative shadow-lg">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-amber-900/80 rounded-b-lg">
+                <div className="w-12 h-24 md:w-20 md:h-40 bg-amber-900 rounded-xl mb-1 relative shadow-lg overflow-hidden">
+                  <img 
+                    src={img2618} 
+                    alt="OUD PARFUM"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500 z-10"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-amber-900/80 rounded-b-lg z-10">
                     <p className="text-[6px] md:text-[9px] text-white font-semibold text-center">VINTAGE BEAUTY®</p>
                     <p className="text-[4px] md:text-[7px] text-white text-center">LUXURY</p>
                   </div>
@@ -584,9 +656,14 @@ const Home = () => {
 
               {/* Middle Bottle - CEO MAN */}
               <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-black rounded-xl mb-1 relative shadow-lg">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/80 rounded-b-lg">
+                <div className="w-12 h-24 md:w-20 md:h-40 bg-black rounded-xl mb-1 relative shadow-lg overflow-hidden">
+                  <img 
+                    src={img2617} 
+                    alt="CEO MAN"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500 z-10"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/80 rounded-b-lg z-10">
                     <p className="text-[6px] md:text-[9px] text-white font-semibold text-center">VINTAGE BEAUTY®</p>
                     <p className="text-[4px] md:text-[7px] text-white text-center">LUXURY</p>
                   </div>
@@ -598,9 +675,14 @@ const Home = () => {
 
               {/* Right Bottle - GLAM WOMAN */}
               <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-orange-200 rounded-xl mb-1 relative shadow-lg">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-orange-300 rounded-full -mt-2.5 md:-mt-3 border-2 border-orange-400"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-orange-200/80 rounded-b-lg">
+                <div className="w-12 h-24 md:w-20 md:h-40 bg-orange-200 rounded-xl mb-1 relative shadow-lg overflow-hidden">
+                  <img 
+                    src={img2619} 
+                    alt="GLAM WOMAN"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-orange-300 rounded-full -mt-2.5 md:-mt-3 border-2 border-orange-400 z-10"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-orange-200/80 rounded-b-lg z-10">
                     <p className="text-[6px] md:text-[9px] text-black font-semibold text-center">VINTAGE BEAUTY®</p>
                     <p className="text-[4px] md:text-[7px] text-black text-center">LUXURY</p>
                   </div>
@@ -668,32 +750,27 @@ const Home = () => {
               <div className="relative w-full h-48 md:h-56 bg-gray-100 overflow-hidden">
                 {category.hasMultipleImages ? (
                   <div className="flex items-center justify-center gap-2 w-full h-full p-4">
-                    <div className="w-24 h-32 bg-white rounded overflow-hidden flex items-center justify-center">
+                    <div className="w-24 h-32 bg-white rounded overflow-hidden">
                       <img 
                         src={category.image1} 
                         alt={category.name}
-                        className="max-w-full max-h-full w-auto h-auto object-contain p-1"
-                        style={{ maxWidth: '100%', maxHeight: '100%' }}
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="w-24 h-32 bg-white rounded overflow-hidden flex items-center justify-center">
+                    <div className="w-24 h-32 bg-white rounded overflow-hidden">
                       <img 
                         src={category.image2} 
                         alt={category.name}
-                        className="max-w-full max-h-full w-auto h-auto object-contain p-1"
-                        style={{ maxWidth: '100%', maxHeight: '100%' }}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center p-4">
-                    <img 
-                      src={category.image} 
-                      alt={category.name}
-                      className="max-w-full max-h-full w-auto h-auto object-contain"
-                      style={{ maxWidth: '100%', maxHeight: '100%' }}
-                    />
-                  </div>
+                  <img 
+                    src={category.image} 
+                    alt={category.name}
+                    className="w-full h-full object-cover"
+                  />
                 )}
               </div>
               
@@ -803,12 +880,11 @@ const Home = () => {
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <div className="flex flex-row gap-4 md:gap-6 items-center p-3 md:p-6">
             {/* Product Image - Left */}
-            <div className="bg-gray-100 rounded-xl p-2 md:p-6 flex items-center justify-center flex-shrink-0 overflow-hidden w-24 md:w-48 h-24 md:h-64">
+            <div className="bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden w-24 md:w-48 h-24 md:h-64">
               <img 
                 src={img2721} 
                 alt="Alpha Perfume"
-                className="max-w-full max-h-full w-auto h-auto object-contain"
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                className="w-full h-full object-cover"
               />
             </div>
             
@@ -878,12 +954,11 @@ const Home = () => {
               </div>
               
               {/* Product Image */}
-              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full h-24 md:h-32 overflow-hidden">
+              <div className="bg-white rounded-xl mb-2 w-full h-24 md:h-32 overflow-hidden">
                 <img 
                   src={img2723} 
                   alt="Self Care Kit"
-                  className="max-w-full max-h-full w-auto h-auto object-contain"
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  className="w-full h-full object-cover"
                 />
               </div>
               
@@ -907,12 +982,11 @@ const Home = () => {
               </div>
               
               {/* Product Image */}
-              <div className="bg-white rounded-xl p-2 mb-2 flex items-center justify-center w-full h-24 md:h-32 overflow-hidden">
+              <div className="bg-white rounded-xl mb-2 w-full h-24 md:h-32 overflow-hidden">
                 <img 
                   src={img2725} 
                   alt="Self Love Kit"
-                  className="max-w-full max-h-full w-auto h-auto object-contain"
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  className="w-full h-full object-cover"
                 />
               </div>
               
@@ -1316,12 +1390,11 @@ const Home = () => {
             <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-20 rounded-lg overflow-hidden flex items-center justify-center">
+                  <div className="w-16 h-20 rounded-lg overflow-hidden">
                     <img 
                       src={img2711} 
                       alt="Zodiac Collection"
-                      className="max-w-full max-h-full w-auto h-auto object-contain"
-                      style={{ maxWidth: '100%', maxHeight: '100%' }}
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
@@ -1587,12 +1660,11 @@ const Home = () => {
             <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-20 rounded-lg overflow-hidden flex items-center justify-center">
+                  <div className="w-16 h-20 rounded-lg overflow-hidden">
                     <img 
                       src={img2711} 
                       alt="Zodiac Collection"
-                      className="max-w-full max-h-full w-auto h-auto object-contain"
-                      style={{ maxWidth: '100%', maxHeight: '100%' }}
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
@@ -1814,12 +1886,11 @@ const Home = () => {
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide" style={{ maxWidth: '100%' }}>
                       {recommendedProducts.map((product) => (
                         <div key={product.id} className="flex-shrink-0 w-40 bg-white border border-gray-200 rounded-xl overflow-hidden">
-                          <div className="w-full h-40 bg-gray-50 flex items-center justify-center p-2 overflow-hidden">
+                          <div className="w-full h-40 bg-gray-50 overflow-hidden">
                             <img 
                               src={product.image} 
                               alt={product.name}
-                              className="max-w-full max-h-full w-auto h-auto object-contain"
-                              style={{ maxWidth: '100%', maxHeight: '100%' }}
+                              className="w-full h-full object-cover"
                             />
                           </div>
                           <div className="p-3">
@@ -1846,12 +1917,11 @@ const Home = () => {
                   <div className="space-y-4 mb-6">
                     {cartItems.map((item) => (
                       <div key={item.id} className="flex gap-4 border-b border-gray-200 pb-4">
-                        <div className="w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        <div className="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 overflow-hidden">
                           <img 
                             src={item.image} 
                             alt={item.name}
-                            className="max-w-full max-h-full w-auto h-auto object-contain p-2"
-                            style={{ maxWidth: '100%', maxHeight: '100%' }}
+                            className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="flex-1">

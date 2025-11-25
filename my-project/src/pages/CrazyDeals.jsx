@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Import images from assets folder
-import img2725 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2725.JPG';
+// Import images from assets vintage folder
+import img2725 from '../assets/images vintage/1.jpg';
 
 const CrazyDeals = () => {
   const [activeTab, setActiveTab] = useState('CRAZY DEALS');
@@ -191,12 +191,11 @@ const CrazyDeals = () => {
                     {/* Golden base circle */}
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
                     {/* Products on pedestal */}
-                    <div className="absolute inset-2 flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-2 overflow-hidden rounded-full">
                       <img 
                         src={card.image} 
                         alt={card.title}
-                        className="max-w-full max-h-full w-auto h-auto object-contain"
-                        style={{ maxWidth: '100%', maxHeight: '100%' }}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>

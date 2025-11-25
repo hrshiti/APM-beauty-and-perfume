@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Import images from assets folder
-import img2616 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2616.JPG';
-import img2617 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2617.JPG';
-import img2618 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2618.JPG';
-import img2619 from '../assets/3306  Vijay Maurya Raw images (1)/New folder/IMG_2619.JPG';
-import img2638 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2638.JPG';
-import img2645 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2645.JPG';
-import img2648 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2648.JPG';
-import img2651 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2651.JPG';
-import img2653 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2653.JPG';
-import img2657 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2657.JPG';
-import img2669 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (2)/IMG_2669.JPG';
-import img2698 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2698.JPG';
-import img2700 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2700.JPG';
-import img2702 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2702.JPG';
-import img2703 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2703.JPG';
-import img2705 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2705.JPG';
-import img2707 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2707.JPG';
-import img2709 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (3)/IMG_2709.JPG';
-import img2711 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2711.JPG';
-import img2719 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2719.JPG';
-import img2721 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2721.JPG';
-import img2723 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2723.JPG';
-import img2725 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2725.JPG';
-import img2727 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2727.JPG';
-import img2728 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2728.JPG';
-import img2732 from '../assets/3306  Vijay Maurya Raw images (1)/New folder (4)/IMG_2732.JPG';
+// Import images from assets vintage folder
+import img2616 from '../assets/images vintage/1.jpg';
+import img2617 from '../assets/images vintage/2.jpg';
+import img2618 from '../assets/images vintage/3.jpg';
+import img2619 from '../assets/images vintage/4.jpg';
+import img2638 from '../assets/images vintage/5.jpg';
+import img2645 from '../assets/images vintage/6.jpg';
+import img2648 from '../assets/images vintage/7.jpg';
+import img2651 from '../assets/images vintage/8-222.jpg';
+import img2653 from '../assets/images vintage/2_1.jpg';
+import img2657 from '../assets/images vintage/3_1.jpg';
+import img2669 from '../assets/images vintage/4_1.jpg';
+import img2698 from '../assets/images vintage/5_1.jpg';
+import img2700 from '../assets/images vintage/4----2.jpg';
+import img2702 from '../assets/images vintage/IMG_6487.jpg';
+import img2703 from '../assets/images vintage/IMG_6503.jpg';
+import img2705 from '../assets/images vintage/IMG_9720.JPG';
+import img2707 from '../assets/images vintage/1.jpg';
+import img2709 from '../assets/images vintage/2.jpg';
+import img2711 from '../assets/images vintage/3.jpg';
+import img2719 from '../assets/images vintage/4.jpg';
+import img2721 from '../assets/images vintage/5.jpg';
+import img2723 from '../assets/images vintage/6.jpg';
+import img2725 from '../assets/images vintage/7.jpg';
+import img2727 from '../assets/images vintage/8-222.jpg';
+import img2728 from '../assets/images vintage/2_1.jpg';
+import img2732 from '../assets/images vintage/3_1.jpg';
 
 const ShopAll = () => {
   const [activeTab, setActiveTab] = useState('SHOP ALL');
@@ -287,14 +287,11 @@ const ShopAll = () => {
                   {/* Product Image Container */}
                   <div className="relative px-3 pb-2">
                     <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center p-2">
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="max-w-full max-h-full w-auto h-auto object-contain"
-                          style={{ maxWidth: '100%', maxHeight: '100%' }}
-                        />
-                      </div>
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
                       
                       {/* BESTSELLER Badge - Top Left */}
                       {product.tag && (
