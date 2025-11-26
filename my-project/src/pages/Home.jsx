@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCartStore } from '../store/cartStore';
+import { useWishlistStore } from '../store/wishlistStore';
+import { useAuthStore } from '../store/authStore';
+import { getMockCategories } from '../services/mockDataService';
 
 // Import images from assets vintage folder
 import img2609 from '../assets/images vintage/1.jpg';
@@ -33,13 +37,22 @@ import img2728 from '../assets/images vintage/5_1.jpg';
 import img2732 from '../assets/images vintage/IMG_6487.jpg';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { openCart, getItemCount } = useCartStore();
+  const { getCount: getWishlistCount } = useWishlistStore();
+  const { isAuthenticated, user, logout } = useAuthStore();
   const [activeTab, setActiveTab] = useState('bestsellers');
   const [currentBanner, setCurrentBanner] = useState(0);
   const [currentOffer, setCurrentOffer] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCategoriesOpen, setIsSidebarCategoriesOpen] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const categories = getMockCategories();
+  
+  const cartItemCount = getItemCount();
+  const wishlistCount = getWishlistCount();
 
   // Promotional offers for top header
   const offers = [
@@ -266,23 +279,16 @@ const Home = () => {
     }
   ];
 
+  const { addItem: addToCartStore } = useCartStore();
+  
   // Add to cart function
   const addToCart = (product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
-    if (existingItem) {
-      setCartItems(cartItems.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
-    } else {
-      setCartItems([...cartItems, { ...product, quantity: 1 }]);
-    }
+    addToCartStore(product, 1);
   };
 
   // Remove from cart function
   const removeFromCart = (productId) => {
-    setCartItems(cartItems.filter(item => item.id !== productId));
+    useCartStore.getState().removeItem(productId);
   };
 
   // Auto-change banner every 5 seconds
@@ -304,13 +310,100 @@ const Home = () => {
   const currentProducts = activeTab === 'bestsellers' ? bestsellers : newArrivals;
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 safe-area-inset-bottom overflow-x-hidden max-w-full w-full">
+    <div className={`min-h-screen bg-gray-50 pb-20 md:pb-0 safe-area-inset-bottom overflow-x-hidden w-full transition-all duration-300 ${isSidebarOpen ? 'md:ml-80 md:w-[calc(100%-20rem)]' : 'md:w-full'}`}>
+      {/* Mobile Header - Only visible on mobile */}
+      <nav className="flex md:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-[100] w-full max-w-full">
+        <div className="container mx-auto px-4 py-3 max-w-full w-full">
+          <div className="flex items-center justify-between w-full">
+            {/* Left - Hamburger Menu */}
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="p-2 text-gray-700 hover:text-purple-600 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            {/* Center - Logo */}
+            <Link to="/" className="flex items-center">
+              <h1 className="text-lg font-bold text-gray-800">VINTAGE BEAUTY®</h1>
+            </Link>
+
+            {/* Right - User Icon */}
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="relative p-2 text-gray-700 hover:text-purple-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-lg py-2 border border-gray-100 z-50">
+                      <Link 
+                        to="/account" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        My Account
+                      </Link>
+                      <Link 
+                        to="/orders" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        My Orders
+                      </Link>
+                      <Link 
+                        to="/wishlist" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        Wishlist
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          logout();
+                          setIsUserMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600 transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </button>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="p-2 text-gray-700 hover:text-purple-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Top Navbar - Only visible in webview - Fixed */}
       <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-[100] w-full max-w-full">
         <div className="container mx-auto px-6 py-4 max-w-full w-full">
           <div className="flex items-center justify-between">
-            {/* Left side - Logo */}
-            <div className="flex-1 flex items-center">
+            {/* Left side - Hamburger Menu & Logo */}
+            <div className="flex-1 flex items-center gap-4">
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="p-2 text-gray-700 hover:text-purple-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
               <Link to="/" className="flex items-center">
                 <h1 className="text-xl font-bold text-gray-800">VINTAGE BEAUTY®</h1>
               </Link>
@@ -328,13 +421,48 @@ const Home = () => {
                 <Link to="/crazy-deals" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
                   Crazy Deals
                 </Link>
-                <div className="relative group">
-                  <button className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200 flex items-center gap-1">
+                <div 
+                  className="relative group"
+                  onMouseEnter={() => setIsCategoriesOpen(true)}
+                  onMouseLeave={() => setIsCategoriesOpen(false)}
+                >
+                  <button 
+                    className={`font-medium text-sm transition-colors duration-200 flex items-center gap-1 ${
+                      isCategoriesOpen 
+                        ? 'text-purple-600' 
+                        : 'text-gray-700 hover:text-purple-600'
+                    }`}
+                  >
                     Categories
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg 
+                      className={`w-4 h-4 transition-transform duration-200 ${isCategoriesOpen ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
+                  
+                  {/* Dropdown Menu */}
+                  {isCategoriesOpen && (
+                    <div 
+                      className="absolute top-full left-0 mt-1 w-56 bg-white shadow-xl border border-gray-100 py-2 z-50"
+                      onMouseEnter={() => setIsCategoriesOpen(true)}
+                      onMouseLeave={() => setIsCategoriesOpen(false)}
+                    >
+                      {categories.map((category) => (
+                        <Link
+                          key={category.id}
+                          to={`/category/${category.slug}`}
+                          className="block px-5 py-2.5 text-sm font-normal text-gray-800 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150"
+                          onClick={() => setIsCategoriesOpen(false)}
+                        >
+                          {category.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <Link to="/account" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200">
                   Account
@@ -342,15 +470,8 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right side - Search, Support, Cart */}
+            {/* Right side - Support, Cart */}
             <div className="flex-1 flex items-center justify-end gap-6">
-              {/* Search */}
-              <button className="text-gray-700 hover:text-purple-600 transition-colors duration-200">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-              
               {/* Support */}
               <a href="tel:+919876543210" className="text-gray-700 hover:text-purple-600 font-medium text-sm transition-colors duration-200 flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -358,83 +479,123 @@ const Home = () => {
                 </svg>
                 <span>Support</span>
               </a>
+
+              {/* Wishlist */}
+              <Link 
+                to="/wishlist" 
+                className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
               
               {/* Cart */}
-              <button className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200" onClick={() => setIsCartOpen(true)}>
+              <button 
+                className="relative text-gray-700 hover:text-purple-600 transition-colors duration-200" 
+                onClick={openCart}
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                {cartItems.length > 0 && (
+                {cartItemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {cartItems.reduce((total, item) => total + item.quantity, 0)}
+                    {cartItemCount}
                   </span>
                 )}
               </button>
+
+              {/* User Account */}
+              {isAuthenticated ? (
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} 
+                    className="flex items-center gap-2"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-semibold">
+                      {user?.name?.charAt(0) || 'U'}
+                    </div>
+                  </button>
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-lg py-2 border border-gray-100 z-50">
+                      <Link 
+                        to="/account" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        My Account
+                      </Link>
+                      <Link 
+                        to="/orders" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        My Orders
+                      </Link>
+                      <Link 
+                        to="/wishlist" 
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="block px-4 py-2 hover:bg-gray-50 text-gray-700 transition-colors"
+                      >
+                        Wishlist
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          logout();
+                          setIsUserMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600 transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="p-2 text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  title="Login"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
       {/* Top Black Header - Promotional Carousel */}
-      <div className="bg-black text-white py-2 relative overflow-hidden w-full max-w-full md:pt-[73px]">
-        <div className="flex items-center justify-center relative w-full max-w-full">
+      <div className="bg-black text-white py-5 relative overflow-hidden w-full max-w-full border-t border-pink-200 md:pt-[73px] pt-[60px]">
+        <div className="flex items-center justify-center relative w-full max-w-full min-h-[40px]">
           <button 
-            className="absolute left-2 md:left-4 z-10 p-1"
+            className="absolute left-2 md:left-4 z-10 p-1.5 flex items-center justify-center"
             onClick={() => setCurrentOffer((prev) => (prev - 1 + offers.length) % offers.length)}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-300 hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <div className="text-xs md:text-sm font-medium text-center px-8 md:px-12 w-full max-w-full">
+          <div className="text-xs md:text-sm font-medium text-center px-10 md:px-16 w-full max-w-full flex items-center justify-center">
             {offers[currentOffer]}
           </div>
           <button 
-            className="absolute right-2 md:right-4 z-10 p-1"
+            className="absolute right-2 md:right-4 z-10 p-1.5 flex items-center justify-center"
             onClick={() => setCurrentOffer((prev) => (prev + 1) % offers.length)}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-300 hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
       </div>
-
-      {/* Main Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50 w-full max-w-full">
-        <div className="container mx-auto px-2 md:px-4 py-3 max-w-full w-full">
-          <div className="flex items-center justify-between w-full max-w-full">
-            {/* Menu Icon */}
-            <button className="p-2" onClick={() => setIsSidebarOpen(true)}>
-              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-
-            {/* Logo - Center */}
-            <div className="flex-1 text-center">
-              <h1 className="text-xl md:text-2xl font-bold text-gray-800">VINTAGE BEAUTY®</h1>
-            </div>
-
-            {/* Search and Cart Icons */}
-            <div className="flex items-center gap-3">
-              <button className="p-2">
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-              <button className="p-2 relative" onClick={() => setIsCartOpen(true)}>
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartItems.reduce((total, item) => total + item.quantity, 0)}
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section - Banner Carousel */}
       <section className="container mx-auto px-2 md:px-4 py-4 md:py-6 max-w-full overflow-hidden w-full">
@@ -1281,16 +1442,7 @@ const Home = () => {
       </section>
 
       {/* Sidebar */}
-      {isSidebarOpen && (
-        <>
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
-            onClick={() => setIsSidebarOpen(false)}
-          ></div>
-          
-          {/* Sidebar */}
-          <div className="fixed top-0 left-0 h-full w-80 bg-white z-50 overflow-y-auto shadow-2xl animate-slide-in">
+      <div className={`fixed top-0 left-0 h-full w-80 bg-white z-50 overflow-y-auto shadow-2xl transition-transform duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             {/* Close Button */}
             <button 
               onClick={() => setIsSidebarOpen(false)}
@@ -1302,92 +1454,67 @@ const Home = () => {
             </button>
             
             {/* Top Section - User Profile & Cashback */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  {/* User Profile Icon */}
-                  <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-black">
-                      Use <span className="font-bold">99%</span> of your <span className="font-bold">Cashback</span>
-                    </p>
-                    <p className="text-xs text-gray-600 mt-1">To Redeem</p>
-                  </div>
-                </div>
-                {/* Shopping Cart Icon */}
-                <button className="p-2">
-                  <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* MY ORDERS & TRACK ORDER Buttons */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex gap-3">
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 py-3 rounded-md border border-gray-200 transition">
+            <div className="px-4 pt-16 pb-4">
+              {/* MY ORDERS & TRACK ORDER Buttons */}
+              <div className="flex gap-2 mb-4">
+                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
-                  <span className="text-sm font-semibold text-black">MY ORDERS</span>
+                  <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
                 </button>
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 py-3 rounded-md border border-gray-200 transition">
+                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
-                  <span className="text-sm font-semibold text-black">TRACK ORDER</span>
+                  <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
                 </button>
               </div>
-            </div>
 
-            {/* Category Shortcuts - Circular Icons */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex gap-4 justify-center">
+              {/* Category Shortcuts - Circular Icons */}
+              <div className="flex gap-3 justify-center">
                 {/* PERFUMES */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/perfumes" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2705} 
-                      alt="PERFUMES"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Perfumes"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">PERFUMES</span>
-                  <span className="text-xs text-gray-600">VINTAGE BEAUTY CEO</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">PERFUMES</span>
+                  <span className="text-[10px] text-gray-500">VINTAGE BEAUTY</span>
+                </Link>
+
                 {/* COSMETICS */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/cosmetics" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2707} 
-                      alt="COSMETICS"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Cosmetics"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">COSMETICS</span>
-                  <span className="text-xs text-gray-600">VINTAGE BEAUTY</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">COSMETICS</span>
+                  <span className="text-[10px] text-gray-500">VINTAGE BEAUTY</span>
+                </Link>
+
                 {/* SKINCARE */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/skincare" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2709} 
-                      alt="SKINCARE"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Skincare"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">SKINCARE</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">SKINCARE</span>
+                </Link>
               </div>
             </div>
 
             {/* Promotional Banner - Zodiac Collection */}
-            <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-800 to-blue-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-16 h-20 rounded-lg overflow-hidden">
@@ -1426,6 +1553,46 @@ const Home = () => {
                 </svg>
                 <span className="flex-1 text-left text-xs md:text-sm font-semibold text-black">SHOP ALL</span>
               </Link>
+
+              {/* CATEGORIES - Dropdown */}
+              <div>
+                <button 
+                  onClick={() => setIsSidebarCategoriesOpen(!isSidebarCategoriesOpen)}
+                  className="w-full flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                  <span className="flex-1 text-left text-xs md:text-sm font-semibold text-black">CATEGORIES</span>
+                  <svg 
+                    className={`w-4 h-4 md:w-5 md:h-5 text-gray-400 transition-transform duration-200 ${isSidebarCategoriesOpen ? 'rotate-90' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                
+                {/* Categories Dropdown List */}
+                {isSidebarCategoriesOpen && (
+                  <div className="bg-gray-50 pl-4 md:pl-6">
+                    {categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        to={`/category/${category.slug}`}
+                        onClick={() => {
+                          setIsSidebarOpen(false);
+                          setIsSidebarCategoriesOpen(false);
+                        }}
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* BESTSELLERS */}
               <button className="w-full flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition">
@@ -1517,8 +1684,6 @@ const Home = () => {
               </button>
             </div>
           </div>
-        </>
-      )}
 
       {/* Bottom Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-[100] shadow-lg w-full max-w-full">
@@ -1551,16 +1716,7 @@ const Home = () => {
       </nav>
 
       {/* Sidebar */}
-      {isSidebarOpen && (
-        <>
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
-            onClick={() => setIsSidebarOpen(false)}
-          ></div>
-          
-          {/* Sidebar */}
-          <div className="fixed top-0 left-0 h-full w-80 bg-white z-50 overflow-y-auto shadow-2xl animate-slide-in">
+      <div className={`fixed top-0 left-0 h-full w-80 bg-white z-50 overflow-y-auto shadow-2xl transition-transform duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             {/* Close Button */}
             <button 
               onClick={() => setIsSidebarOpen(false)}
@@ -1572,92 +1728,67 @@ const Home = () => {
             </button>
             
             {/* Top Section - User Profile & Cashback */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  {/* User Profile Icon */}
-                  <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-black">
-                      Use <span className="font-bold">99%</span> of your <span className="font-bold">Cashback</span>
-                    </p>
-                    <p className="text-xs text-gray-600 mt-1">To Redeem</p>
-                  </div>
-                </div>
-                {/* Shopping Cart Icon */}
-                <button className="p-2">
-                  <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* MY ORDERS & TRACK ORDER Buttons */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex gap-3">
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 py-3 rounded-md border border-gray-200 transition">
+            <div className="px-4 pt-16 pb-4">
+              {/* MY ORDERS & TRACK ORDER Buttons */}
+              <div className="flex gap-2 mb-4">
+                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
-                  <span className="text-sm font-semibold text-black">MY ORDERS</span>
+                  <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
                 </button>
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 py-3 rounded-md border border-gray-200 transition">
+                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
-                  <span className="text-sm font-semibold text-black">TRACK ORDER</span>
+                  <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
                 </button>
               </div>
-            </div>
 
-            {/* Category Shortcuts - Circular Icons */}
-            <div className="bg-white p-4 border-b border-gray-200">
-              <div className="flex gap-4 justify-center">
+              {/* Category Shortcuts - Circular Icons */}
+              <div className="flex gap-3 justify-center">
                 {/* PERFUMES */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/perfumes" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2705} 
-                      alt="PERFUMES"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Perfumes"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">PERFUMES</span>
-                  <span className="text-xs text-gray-600">VINTAGE BEAUTY CEO</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">PERFUMES</span>
+                  <span className="text-[10px] text-gray-500">VINTAGE BEAUTY</span>
+                </Link>
+
                 {/* COSMETICS */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/cosmetics" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2707} 
-                      alt="COSMETICS"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Cosmetics"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">COSMETICS</span>
-                  <span className="text-xs text-gray-600">VINTAGE BEAUTY</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">COSMETICS</span>
+                  <span className="text-[10px] text-gray-500">VINTAGE BEAUTY</span>
+                </Link>
+
                 {/* SKINCARE */}
-                <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2 border-2 border-gray-200 overflow-hidden">
+                <Link to="/category/skincare" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
-                      src={img2709} 
-                      alt="SKINCARE"
-                      className="w-full h-full object-cover rounded-full"
+                      src={img2711} 
+                      alt="Skincare"
+                      className="w-12 h-12 object-contain"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-black">SKINCARE</span>
-                </div>
+                  <span className="text-xs font-bold text-gray-800 mt-1">SKINCARE</span>
+                </Link>
               </div>
             </div>
 
             {/* Promotional Banner - Zodiac Collection */}
-            <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 m-4 rounded-xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-800 to-blue-900 p-4 m-4 rounded-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-16 h-20 rounded-lg overflow-hidden">
@@ -1696,6 +1827,46 @@ const Home = () => {
                 </svg>
                 <span className="flex-1 text-left text-xs md:text-sm font-semibold text-black">SHOP ALL</span>
               </Link>
+
+              {/* CATEGORIES - Dropdown */}
+              <div>
+                <button 
+                  onClick={() => setIsSidebarCategoriesOpen(!isSidebarCategoriesOpen)}
+                  className="w-full flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                  <span className="flex-1 text-left text-xs md:text-sm font-semibold text-black">CATEGORIES</span>
+                  <svg 
+                    className={`w-4 h-4 md:w-5 md:h-5 text-gray-400 transition-transform duration-200 ${isSidebarCategoriesOpen ? 'rotate-90' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                
+                {/* Categories Dropdown List */}
+                {isSidebarCategoriesOpen && (
+                  <div className="bg-gray-50 pl-4 md:pl-6">
+                    {categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        to={`/category/${category.slug}`}
+                        onClick={() => {
+                          setIsSidebarOpen(false);
+                          setIsSidebarCategoriesOpen(false);
+                        }}
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* BESTSELLERS */}
               <button className="w-full flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition">
@@ -1787,8 +1958,6 @@ const Home = () => {
               </button>
             </div>
           </div>
-        </>
-      )}
 
       {/* Bottom Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-[100] shadow-lg w-full max-w-full">
@@ -1821,7 +1990,7 @@ const Home = () => {
       </nav>
 
       {/* Cart Slide */}
-      {isCartOpen && (
+      {false && (
         <>
           {/* Overlay */}
           <div 
@@ -1855,7 +2024,7 @@ const Home = () => {
 
             {/* Cart Content */}
             <div className="p-4">
-              {cartItems.length === 0 ? (
+              {useCartStore.getState().items.length === 0 ? (
                 <>
                   {/* Empty Cart Message */}
                   <div className="text-center py-8">
@@ -1915,7 +2084,7 @@ const Home = () => {
                 <>
                   {/* Cart Items */}
                   <div className="space-y-4 mb-6">
-                    {cartItems.map((item) => (
+                    {useCartStore.getState().items.map((item) => (
                       <div key={item.id} className="flex gap-4 border-b border-gray-200 pb-4">
                         <div className="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 overflow-hidden">
                           <img 
@@ -1936,11 +2105,7 @@ const Home = () => {
                             <button 
                               onClick={() => {
                                 if (item.quantity > 1) {
-                                  setCartItems(cartItems.map(cartItem => 
-                                    cartItem.id === item.id 
-                                      ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                                      : cartItem
-                                  ));
+                                  useCartStore.getState().updateQuantity(item.id, item.quantity - 1);
                                 } else {
                                   removeFromCart(item.id);
                                 }
@@ -1952,11 +2117,7 @@ const Home = () => {
                             <span className="text-sm font-semibold">{item.quantity}</span>
                             <button 
                               onClick={() => {
-                                setCartItems(cartItems.map(cartItem => 
-                                  cartItem.id === item.id 
-                                    ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                                    : cartItem
-                                ));
+                                useCartStore.getState().updateQuantity(item.id, item.quantity + 1);
                               }}
                               className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100"
                             >
@@ -1979,7 +2140,7 @@ const Home = () => {
                     <div className="flex justify-between items-center mb-4">
                       <span className="text-lg font-semibold text-black">Total:</span>
                       <span className="text-xl font-bold text-black">
-                        ₹{cartItems.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0).toFixed(2)}
+                        ₹{useCartStore.getState().getTotal().toFixed(2)}
                       </span>
                     </div>
                     <button className="w-full bg-black text-white py-3 rounded-md font-semibold hover:bg-gray-800 transition">

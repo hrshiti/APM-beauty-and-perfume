@@ -1,21 +1,72 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import './App.css'
 import Admin from './module/Admin/Admin'
 import Home from './pages/Home'
 import ShopAll from './pages/ShopAll'
 import CrazyDeals from './pages/CrazyDeals'
 import Account from './pages/Account'
+import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import Search from './pages/Search'
+import Category from './pages/Category'
+import Wishlist from './pages/Wishlist'
+import Orders from './pages/Orders'
+import OrderDetail from './pages/OrderDetail'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import CartDrawer from './components/cart/CartDrawer'
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/shop-all" element={<ShopAll />} />
-        <Route path="/crazy-deals" element={<CrazyDeals />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1">
+          <Routes>
+            <Route path="/admin/*" element={<Admin />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/shop-all" element={<ShopAll />} />
+            <Route path="/crazy-deals" element={<CrazyDeals />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/category/:slug" element={<Category />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/:id" element={<OrderDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </main>
+        <CartDrawer />
+        <Toaster 
+          position="top-right" 
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+            success: {
+              duration: 2000,
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              duration: 3000,
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
+      </div>
     </BrowserRouter>
   )
 }
