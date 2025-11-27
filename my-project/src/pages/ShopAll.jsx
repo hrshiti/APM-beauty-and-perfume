@@ -639,12 +639,6 @@ const ShopAll = () => {
               ))}
             </div>
 
-          {/* VIEW ALL Button */}
-          <div className="flex justify-center mt-4 md:mt-6 lg:mt-8">
-            <button className="border-2 border-black text-black bg-white px-6 md:px-8 py-2 md:py-3 rounded-md font-semibold text-sm md:text-base hover:bg-gray-50 transition">
-              VIEW ALL
-            </button>
-          </div>
         </div>
       </div>
 

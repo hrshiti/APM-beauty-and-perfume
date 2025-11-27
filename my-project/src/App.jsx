@@ -22,6 +22,9 @@ import Settings from './pages/Settings'
 import Reviews from './pages/Reviews'
 import Notifications from './pages/Notifications'
 import HelpSupport from './pages/HelpSupport'
+import FAQs from './pages/FAQs'
+import TermsAndConditions from './pages/TermsAndConditions'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import CartDrawer from './components/cart/CartDrawer'
 
 function App() {
@@ -49,6 +52,9 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/help-support" element={<HelpSupport />} />
+            <Route path="/faqs" element={<FAQs />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
