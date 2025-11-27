@@ -25,6 +25,9 @@ import HelpSupport from './pages/HelpSupport'
 import FAQs from './pages/FAQs'
 import TermsAndConditions from './pages/TermsAndConditions'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import ShippingPolicy from './pages/ShippingPolicy'
+import ReturnPolicy from './pages/ReturnPolicy'
+import RefundPolicy from './pages/RefundPolicy'
 import CartDrawer from './components/cart/CartDrawer'
 
 function App() {
@@ -55,6 +58,9 @@ function App() {
             <Route path="/faqs" element={<FAQs />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/return-policy" element={<ReturnPolicy />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

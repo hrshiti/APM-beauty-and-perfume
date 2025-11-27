@@ -122,8 +122,8 @@ const Footer = () => {
                 </svg>
                 <div>
                   <p className="text-xs md:text-sm font-medium">Email</p>
-                  <a href="mailto:support@vintagebeauty.com" className="text-xs md:text-sm hover:text-white transition break-all">
-                    support@vintagebeauty.com
+                  <a href="mailto:shop@bellavitaorganic.com" className="text-xs md:text-sm hover:text-white transition break-all">
+                    shop@bellavitaorganic.com
                   </a>
                 </div>
               </div>
@@ -133,8 +133,8 @@ const Footer = () => {
                 </svg>
                 <div>
                   <p className="text-xs md:text-sm font-medium">Phone</p>
-                  <a href="tel:+911234567890" className="text-xs md:text-sm hover:text-white transition">
-                    +91 123 456 7890
+                  <a href="tel:+919810154380" className="text-xs md:text-sm hover:text-white transition">
+                    +91-9810154380
                   </a>
                 </div>
               </div>
@@ -145,7 +145,7 @@ const Footer = () => {
                 </svg>
                 <div>
                   <p className="text-xs md:text-sm font-medium">Address</p>
-                  <p className="text-xs md:text-sm">123 Fashion Street, Mumbai, India 400001</p>
+                  <p className="text-xs md:text-sm">Plot no. 417, Udyog Vihar Phase III, Gurgaon, Haryana, India</p>
                 </div>
               </div>
             </div>
@@ -196,12 +196,12 @@ const Footer = () => {
             <div>
               <h5 className="text-white text-sm md:text-base font-semibold mb-2 md:mb-4">Policies</h5>
               <div className="grid grid-cols-2 gap-2 md:gap-3">
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">Privacy Policy</a>
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">Terms & Conditions</a>
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">Shipping Policy</a>
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">Return Policy</a>
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">Refund Policy</a>
-                <a href="#" className="text-xs md:text-sm hover:text-white transition">FAQ</a>
+                <Link to="/privacy-policy" className="text-xs md:text-sm hover:text-white transition">Privacy Policy</Link>
+                <Link to="/terms-and-conditions" className="text-xs md:text-sm hover:text-white transition">Terms & Conditions</Link>
+                <Link to="/shipping-policy" className="text-xs md:text-sm hover:text-white transition">Shipping Policy</Link>
+                <Link to="/return-policy" className="text-xs md:text-sm hover:text-white transition">Return Policy</Link>
+                <Link to="/refund-policy" className="text-xs md:text-sm hover:text-white transition">Refund Policy</Link>
+                <Link to="/faqs" className="text-xs md:text-sm hover:text-white transition">FAQ</Link>
               </div>
             </div>
           </div>
@@ -214,9 +214,9 @@ const Footer = () => {
               © {new Date().getFullYear()} VINTAGE BEAUTY®. All rights reserved.
             </p>
             <div className="flex gap-4 md:gap-6 text-xs md:text-sm">
-              <a href="#" className="hover:text-white transition">Privacy</a>
-              <a href="#" className="hover:text-white transition">Terms</a>
-              <a href="#" className="hover:text-white transition">Cookies</a>
+              <Link to="/privacy-policy" className="hover:text-white transition">Privacy</Link>
+              <Link to="/terms-and-conditions" className="hover:text-white transition">Terms</Link>
+              <Link to="/privacy-policy" className="hover:text-white transition">Cookies</Link>
             </div>
           </div>
         </div>
