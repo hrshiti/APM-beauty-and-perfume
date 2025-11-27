@@ -8,7 +8,6 @@ import { getMockCategories } from '../../services/mockDataService';
 
 // Import images from assets vintage folder
 import img2723 from '../../assets/images vintage/6.jpg';
-import logoImage from '../../assets/logo (2).png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -65,12 +64,13 @@ const Header = () => {
               </button>
               
               {/* Logo */}
-              <Link to="/" className="flex items-center">
+              <Link to="/" className="flex items-center gap-2 text-xl md:text-2xl font-bold text-gray-800 hover:text-purple-600 transition-colors">
                 <img 
-                  src={logoImage} 
-                  alt="VINTAGE BEAUTY" 
-                  className="h-8 md:h-10 w-auto object-contain"
+                  src="/logo.png" 
+                  alt="Vintage Beauty Logo" 
+                  className="w-7 h-7 md:w-9 md:h-9 object-contain"
                 />
+                VINTAGE BEAUTY®
               </Link>
             </div>
 

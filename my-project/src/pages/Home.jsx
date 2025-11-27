@@ -351,7 +351,12 @@ const Home = () => {
             </button>
 
             {/* Center - Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center gap-2">
+              <img 
+                src="/logo.png" 
+                alt="Vintage Beauty Logo" 
+                className="w-7 h-7 object-contain"
+              />
               <h1 className="text-lg font-bold text-gray-800">VINTAGE BEAUTY®</h1>
             </Link>
 
@@ -820,95 +825,6 @@ const Home = () => {
         <div className="flex justify-center mt-6 md:mt-8">
           <Link to="/shop-all" className="border-2 border-black text-black bg-white px-8 py-3 rounded-md font-semibold hover:bg-gray-50 transition inline-block">
             VIEW ALL
-          </Link>
-        </div>
-      </section>
-
-      {/* Buy Any 3 Promotional Card */}
-      <section className="container mx-auto px-2 md:px-4 py-3 md:py-4 max-w-full overflow-hidden w-full">
-        <div className="bg-gray-800 rounded-xl overflow-hidden relative w-full">
-          {/* Top Section - Offer Text */}
-          <div className="bg-gray-800 px-3 md:px-6 py-3 md:py-4 relative">
-            {/* Subtle Floral Pattern Background */}
-            <div className="absolute inset-0 opacity-10">
-              <svg className="w-full h-full" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 30 Q60 20 70 30 Q80 40 70 50 Q60 60 50 50 Q40 40 50 30" stroke="white" strokeWidth="1" fill="none"/>
-                <path d="M150 30 Q160 20 170 30 Q180 40 170 50 Q160 60 150 50 Q140 40 150 30" stroke="white" strokeWidth="1" fill="none"/>
-                <path d="M250 30 Q260 20 270 30 Q280 40 270 50 Q260 60 250 50 Q240 40 250 30" stroke="white" strokeWidth="1" fill="none"/>
-                <path d="M350 30 Q360 20 370 30 Q380 40 370 50 Q360 60 350 50 Q340 40 350 30" stroke="white" strokeWidth="1" fill="none"/>
-              </svg>
-            </div>
-            
-            {/* Offer Text */}
-            <div className="relative z-10 text-center">
-              <div className="border-t border-white/30 w-20 md:w-32 mx-auto mb-1"></div>
-              <h2 className="text-lg md:text-xl font-bold text-white mb-0.5">Buy Any 3</h2>
-              <div className="border-t border-white/30 w-20 md:w-32 mx-auto mb-0.5"></div>
-              <p className="text-xl md:text-2xl font-bold text-white mb-0.5">for ₹1298</p>
-              <div className="border-t border-white/30 w-20 md:w-32 mx-auto mb-1"></div>
-              <p className="text-xs md:text-sm font-semibold text-white">Only</p>
-            </div>
-          </div>
-
-          {/* Bottom Section - Perfume Bottles */}
-          <Link to="/crazy-deals" className="block bg-gray-100 px-3 md:px-6 py-3 md:py-4 hover:bg-gray-200 transition-colors cursor-pointer">
-            <div className="flex flex-row items-center justify-center gap-1 md:gap-2">
-              {/* Left Bottle - OUD PARFUM */}
-              <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-amber-900 rounded-xl mb-1 relative shadow-lg overflow-hidden">
-                  <img 
-                    src={img2618} 
-                    alt="OUD PARFUM"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500 z-10"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-amber-900/80 rounded-b-lg z-10">
-                    <p className="text-[6px] md:text-[9px] text-white font-semibold text-center">VINTAGE BEAUTY®</p>
-                    <p className="text-[4px] md:text-[7px] text-white text-center">LUXURY</p>
-                  </div>
-                </div>
-                <p className="text-[8px] md:text-[10px] font-semibold text-gray-800 text-center">OUD PARFUM</p>
-                <p className="text-[7px] md:text-[9px] text-gray-600 text-center">100 ML | 3.4 fl. oz.</p>
-              </div>
-
-              {/* Middle Bottle - CEO MAN */}
-              <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-black rounded-xl mb-1 relative shadow-lg overflow-hidden">
-                  <img 
-                    src={img2617} 
-                    alt="CEO MAN"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-yellow-600 rounded-full -mt-2.5 md:-mt-3 border-2 border-yellow-500 z-10"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/80 rounded-b-lg z-10">
-                    <p className="text-[6px] md:text-[9px] text-white font-semibold text-center">VINTAGE BEAUTY®</p>
-                    <p className="text-[4px] md:text-[7px] text-white text-center">LUXURY</p>
-                  </div>
-                </div>
-                <p className="text-[8px] md:text-[10px] font-semibold text-gray-800 text-center">CEO MAN</p>
-                <p className="text-[7px] md:text-[9px] text-gray-600 text-center">EAU DE PARFUM</p>
-                <p className="text-[7px] md:text-[9px] text-gray-600 text-center">100 ML | 3.4 fl. oz.</p>
-              </div>
-
-              {/* Right Bottle - GLAM WOMAN */}
-              <div className="flex flex-col items-center flex-1">
-                <div className="w-12 h-24 md:w-20 md:h-40 bg-orange-200 rounded-xl mb-1 relative shadow-lg overflow-hidden">
-                  <img 
-                    src={img2619} 
-                    alt="GLAM WOMAN"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-orange-300 rounded-full -mt-2.5 md:-mt-3 border-2 border-orange-400 z-10"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-1 bg-orange-200/80 rounded-b-lg z-10">
-                    <p className="text-[6px] md:text-[9px] text-black font-semibold text-center">VINTAGE BEAUTY®</p>
-                    <p className="text-[4px] md:text-[7px] text-black text-center">LUXURY</p>
-                  </div>
-                </div>
-                <p className="text-[8px] md:text-[10px] font-semibold text-gray-800 text-center">GLAM WOMAN</p>
-                <p className="text-[7px] md:text-[9px] text-gray-600 text-center">EAU DE PARFUM</p>
-                <p className="text-[7px] md:text-[9px] text-gray-600 text-center">100 ML | 3.4 fl. oz.</p>
-              </div>
-            </div>
           </Link>
         </div>
       </section>

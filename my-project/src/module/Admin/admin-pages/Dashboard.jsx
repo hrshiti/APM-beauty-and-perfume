@@ -156,10 +156,10 @@ const Dashboard = () => {
   const StatCard = ({ title, value, linkTo }) => (
     <Link 
       to={linkTo}
-      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+      className="bg-white p-3 md:p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
     >
-      <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-      <p className="text-3xl font-bold text-blue-600 mt-2">{value}</p>
+      <h3 className="text-sm md:text-lg font-semibold text-gray-700 truncate">{title}</h3>
+      <p className="text-xl md:text-3xl font-bold text-blue-600 mt-1 md:mt-2">{value}</p>
     </Link>
   );
 
@@ -206,18 +206,18 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+    <div className="p-2 md:p-6 space-y-3 md:space-y-6 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4 sm:mb-0">Admin Dashboard</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:gap-0">
+        <h1 className="text-xl md:text-3xl font-bold text-gray-800">Admin Dashboard</h1>
         
         {/* Period Selector and Refresh Button */}
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-1 md:gap-2 items-center flex-wrap">
           {['daily', 'monthly', 'yearly'].map(period => (
             <button
               key={period}
               onClick={() => setSelectedPeriod(period)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-2 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                 selectedPeriod === period
                   ? 'bg-blue-600 text-white'
                   : 'bg-white text-gray-600 hover:bg-gray-100'
@@ -231,14 +231,14 @@ const Dashboard = () => {
           <button
             onClick={handleRefresh}
             disabled={refreshing || loading}
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg border border-green-800"
+            className="px-2 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 md:gap-2 shadow-lg border border-green-800"
             title="Refresh Dashboard"
           >
             <RefreshCw 
-              size={20} 
+              size={16} 
               className={refreshing ? 'animate-spin' : ''} 
             />
-            <span className="font-semibold">Refresh</span>
+            <span className="font-semibold hidden sm:inline">Refresh</span>
           </button>
         </div>
       </div>
@@ -247,63 +247,65 @@ const Dashboard = () => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-sm p-6"
+        className="bg-white rounded-xl shadow-sm p-3 md:p-6"
       >
-        <div className="flex items-center gap-3 mb-6">
-          <BarChart3 className="text-blue-600" size={24} />
-          <h2 className="text-2xl font-bold text-gray-800">Sales Overview ({selectedPeriod})</h2>
+        <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+          <BarChart3 className="text-blue-600" size={20} />
+          <h2 className="text-lg md:text-2xl font-bold text-gray-800">Sales Overview ({selectedPeriod})</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white cursor-pointer" onClick={() => setShowRevenueModal(true)}>
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 mb-3 md:mb-6">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-2 md:p-4 text-white cursor-pointer" onClick={() => setShowRevenueModal(true)}>
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm">Net Revenue</p>
-                <p className="text-2xl font-bold">{formatCurrency(revenueAnalytics.netRevenue)}</p>
-                <p className="text-blue-100 text-xs">Click to view breakdown</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-blue-100 text-xs md:text-sm truncate">Net Revenue</p>
+                <p className="text-lg md:text-2xl font-bold truncate">{formatCurrency(revenueAnalytics.netRevenue)}</p>
+                <p className="text-blue-100 text-[10px] md:text-xs hidden md:block">Click to view breakdown</p>
               </div>
-              <DollarSign size={32} className="text-blue-200" />
+              <DollarSign size={20} className="text-blue-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100 text-sm">Total Orders</p>
-                <p className="text-2xl font-bold">{salesAnalytics.totalOrders}</p>
-                <GrowthIndicator value={salesAnalytics.growth.orders} label="vs previous" />
+              <div className="flex-1 min-w-0">
+                <p className="text-green-100 text-xs md:text-sm truncate">Total Orders</p>
+                <p className="text-lg md:text-2xl font-bold">{salesAnalytics.totalOrders}</p>
+                <div className="hidden md:block">
+                  <GrowthIndicator value={salesAnalytics.growth.orders} label="vs previous" />
+                </div>
               </div>
-              <ShoppingCart size={32} className="text-green-200" />
+              <ShoppingCart size={20} className="text-green-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100 text-sm">Avg Order Value</p>
-                <p className="text-2xl font-bold">{formatCurrency(salesAnalytics.averageOrderValue)}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-purple-100 text-xs md:text-sm truncate">Avg Order Value</p>
+                <p className="text-lg md:text-2xl font-bold truncate">{formatCurrency(salesAnalytics.averageOrderValue)}</p>
               </div>
-              <Package size={32} className="text-purple-200" />
+              <Package size={20} className="text-purple-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-orange-100 text-sm">Total Users</p>
-                <p className="text-2xl font-bold">{stats.totalUsers}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-orange-100 text-xs md:text-sm truncate">Total Users</p>
+                <p className="text-lg md:text-2xl font-bold">{stats.totalUsers}</p>
               </div>
-              <Users size={32} className="text-orange-200" />
+              <Users size={20} className="text-orange-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
         </div>
 
         {/* Order Status Breakdown */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
           {Object.entries(salesAnalytics.statusBreakdown || {}).map(([status, count]) => (
-            <div key={status} className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="text-sm text-gray-600 capitalize">{status}</p>
-              <p className="text-xl font-bold text-gray-800">{count}</p>
+            <div key={status} className="bg-gray-50 rounded-lg p-2 md:p-4 text-center">
+              <p className="text-xs md:text-sm text-gray-600 capitalize truncate">{status}</p>
+              <p className="text-base md:text-xl font-bold text-gray-800">{count}</p>
             </div>
           ))}
         </div>
@@ -314,73 +316,73 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="bg-white rounded-xl shadow-sm p-6"
+        className="bg-white rounded-xl shadow-sm p-3 md:p-6"
       >
-        <div className="flex items-center gap-3 mb-6">
-          <Package className="text-green-600" size={24} />
-          <h2 className="text-2xl font-bold text-gray-800">Stock Summary</h2>
+        <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+          <Package className="text-green-600" size={20} />
+          <h2 className="text-lg md:text-2xl font-bold text-gray-800">Stock Summary</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 mb-3 md:mb-6">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100 text-sm">In Stock</p>
-                <p className="text-2xl font-bold">{stockSummary.inStockProducts}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-green-100 text-xs md:text-sm truncate">In Stock</p>
+                <p className="text-lg md:text-2xl font-bold">{stockSummary.inStockProducts}</p>
               </div>
-              <Package size={32} className="text-green-200" />
+              <Package size={20} className="text-green-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-red-100 text-sm">Out of Stock</p>
-                <p className="text-2xl font-bold">{stockSummary.outOfStockProducts}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-red-100 text-xs md:text-sm truncate">Out of Stock</p>
+                <p className="text-lg md:text-2xl font-bold">{stockSummary.outOfStockProducts}</p>
               </div>
-              <AlertTriangle size={32} className="text-red-200" />
+              <AlertTriangle size={20} className="text-red-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-yellow-100 text-sm">Low Stock</p>
-                <p className="text-2xl font-bold">{stockSummary.lowStockProducts}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-yellow-100 text-xs md:text-sm truncate">Low Stock</p>
+                <p className="text-lg md:text-2xl font-bold">{stockSummary.lowStockProducts}</p>
               </div>
-              <AlertTriangle size={32} className="text-yellow-200" />
+              <AlertTriangle size={20} className="text-yellow-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg p-4 text-white">
+          <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg p-2 md:p-4 text-white">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-indigo-100 text-sm">Stock Value</p>
-                <p className="text-2xl font-bold">{formatCurrency(stockSummary.totalStockValue)}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-indigo-100 text-xs md:text-sm truncate">Stock Value</p>
+                <p className="text-lg md:text-2xl font-bold truncate">{formatCurrency(stockSummary.totalStockValue)}</p>
               </div>
-              <DollarSign size={32} className="text-indigo-200" />
+              <DollarSign size={20} className="text-indigo-200 md:w-8 md:h-8 flex-shrink-0 ml-1" />
             </div>
           </div>
         </div>
 
         {/* Low Stock Alerts */}
         {stockSummary.lowStockAlerts && stockSummary.lowStockAlerts.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="text-red-600" size={20} />
-              <h3 className="text-lg font-semibold text-red-800">Low Stock Alerts</h3>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-2 md:p-4">
+            <div className="flex items-center gap-2 mb-2 md:mb-3">
+              <AlertTriangle className="text-red-600" size={16} />
+              <h3 className="text-base md:text-lg font-semibold text-red-800">Low Stock Alerts</h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
               {stockSummary.lowStockAlerts.slice(0, 6).map((product) => (
-                <div key={product.id} className="bg-white rounded-lg p-3 border border-red-200">
-                  <p className="font-medium text-gray-800 truncate">{product.name}</p>
-                  <p className="text-sm text-gray-600">{product.category}</p>
-                  <p className="text-sm font-semibold text-red-600">Stock: {product.currentStock}</p>
+                <div key={product.id} className="bg-white rounded-lg p-2 md:p-3 border border-red-200">
+                  <p className="font-medium text-gray-800 truncate text-sm md:text-base">{product.name}</p>
+                  <p className="text-xs md:text-sm text-gray-600 truncate">{product.category}</p>
+                  <p className="text-xs md:text-sm font-semibold text-red-600">Stock: {product.currentStock}</p>
                 </div>
               ))}
             </div>
             {stockSummary.lowStockAlerts.length > 6 && (
-              <p className="text-sm text-red-600 mt-2">
+              <p className="text-xs md:text-sm text-red-600 mt-2">
                 +{stockSummary.lowStockAlerts.length - 6} more products with low stock
               </p>
             )}
@@ -389,7 +391,7 @@ const Dashboard = () => {
       </motion.div>
 
       {/* Product Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
         <StatCard 
           title="Total Products" 
           value={stats.totalProducts}
@@ -413,7 +415,7 @@ const Dashboard = () => {
       </div>
 
       {/* User Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
         <StatCard 
           title="Active Users" 
           value={stats.activeUsers}
@@ -432,19 +434,19 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link to="/admin/products/new" className="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors text-center">
+      <div className="bg-white rounded-xl shadow-sm p-3 md:p-6">
+        <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+          <Link to="/admin/products/new" className="bg-blue-600 text-white px-2 md:px-4 py-2 md:py-3 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs md:text-base">
             Add New Product
           </Link>
-          <Link to="/admin/orders" className="bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors text-center">
+          <Link to="/admin/orders" className="bg-green-600 text-white px-2 md:px-4 py-2 md:py-3 rounded-lg hover:bg-green-700 transition-colors text-center text-xs md:text-base">
             View Orders
           </Link>
-          <Link to="/admin/users" className="bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors text-center">
+          <Link to="/admin/users" className="bg-purple-600 text-white px-2 md:px-4 py-2 md:py-3 rounded-lg hover:bg-purple-700 transition-colors text-center text-xs md:text-base">
             Manage Users
           </Link>
-          <Link to="/admin/categories" className="bg-orange-600 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-colors text-center">
+          <Link to="/admin/categories" className="bg-orange-600 text-white px-2 md:px-4 py-2 md:py-3 rounded-lg hover:bg-orange-700 transition-colors text-center text-xs md:text-base">
             Manage Categories
           </Link>
         </div>

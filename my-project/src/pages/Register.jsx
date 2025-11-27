@@ -73,7 +73,12 @@ const Register = () => {
             </button>
 
             {/* Center - Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center gap-2">
+              <img 
+                src="/logo.png" 
+                alt="Vintage Beauty Logo" 
+                className="w-7 h-7 object-contain"
+              />
               <h1 className="text-lg font-bold text-gray-800">VINTAGE BEAUTY®</h1>
             </Link>
 
@@ -151,7 +156,12 @@ const Register = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <Link to="/" className="flex items-center">
+              <Link to="/" className="flex items-center gap-2">
+                <img 
+                  src="/logo.png" 
+                  alt="Vintage Beauty Logo" 
+                  className="w-7 h-7 object-contain"
+                />
                 <h1 className="text-xl font-bold text-gray-800">VINTAGE BEAUTY®</h1>
               </Link>
             </div>
