@@ -172,7 +172,7 @@ const ProductDetail = () => {
             </button>
           </div>
         )}
-        <div className="flex-1 container mx-auto px-4 py-6 md:py-8">
+        <div className="flex-1 container mx-auto px-4 py-6 md:py-8 pb-24 md:pb-8">
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm">
           <ol className="flex items-center space-x-2 text-gray-600">
@@ -761,7 +761,7 @@ const ProductDetail = () => {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mb-12">
+          <div className="mb-12 md:mb-12">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">You May Also Like</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map((relatedProduct) => (
@@ -772,6 +772,36 @@ const ProductDetail = () => {
         )}
         </div>
         <Footer />
+
+        {/* Bottom Navigation Bar - Mobile Only */}
+        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-[100] shadow-lg w-full max-w-full">
+          <div className="flex items-center justify-around py-2 w-full max-w-full">
+            <Link to="/" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+              </svg>
+              <span className="text-xs font-medium">Home</span>
+            </Link>
+            <Link to="/shop-all" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              <span className="text-xs font-medium">Shop All</span>
+            </Link>
+            <Link to="/crazy-deals" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+              <span className="text-xs font-medium">Crazy Deals</span>
+            </Link>
+            <Link to="/account" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="text-xs font-medium">Account</span>
+            </Link>
+          </div>
+        </nav>
       </div>
     </>
   );
