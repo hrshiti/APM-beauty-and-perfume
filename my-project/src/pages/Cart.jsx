@@ -36,21 +36,21 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 flex flex-col">
-      <div className="flex-1 container mx-auto px-4 py-6 md:py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
+      <div className="flex-1 container mx-auto px-3 md:px-4 py-4 md:py-6 md:py-8 max-w-full overflow-x-hidden">
+        <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Shopping Cart</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+            <div className="bg-white rounded-lg shadow-sm p-3 md:p-4 lg:p-6">
               {items.map((item) => (
                 <CartItem key={item.id} item={item} />
               ))}
               
-              <div className="mt-4 pt-4 border-t flex justify-between">
+              <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
                 <Link
                   to="/shop-all"
-                  className="text-purple-600 hover:text-purple-700 font-medium"
+                  className="text-purple-600 hover:text-purple-700 font-medium text-sm md:text-base"
                 >
                   ← Continue Shopping
                 </Link>
@@ -60,7 +60,7 @@ const Cart = () => {
                       clearCart();
                     }
                   }}
-                  className="text-red-600 hover:text-red-700 font-medium"
+                  className="text-red-600 hover:text-red-700 font-medium text-sm md:text-base"
                 >
                   Clear Cart
                 </button>
@@ -69,9 +69,9 @@ const Cart = () => {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 mt-4 lg:mt-0">
             <div className="bg-white rounded-lg shadow-sm p-4 md:p-6 sticky top-20">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
+              <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Order Summary</h2>
               
               {/* Coupon Input */}
               <div className="mb-4">
@@ -79,27 +79,27 @@ const Cart = () => {
               </div>
 
               {/* Price Breakdown */}
-              <div className="space-y-3 mb-4">
-                <div className="flex justify-between text-sm">
+              <div className="space-y-2 md:space-y-3 mb-3 md:mb-4">
+                <div className="flex justify-between text-xs md:text-sm">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
                 </div>
                 {discount > 0 && (
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs md:text-sm">
                     <span className="text-gray-600">Discount</span>
                     <span className="font-semibold text-green-600">-₹{discount.toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs md:text-sm">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-semibold">{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
                 </div>
                 {subtotal < 999 && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-[10px] md:text-xs text-gray-500">
                     Add ₹{(999 - subtotal).toFixed(2)} more for free shipping
                   </p>
                 )}
-                <div className="flex justify-between font-bold text-lg border-t border-gray-300 pt-3">
+                <div className="flex justify-between font-bold text-base md:text-lg border-t border-gray-300 pt-2 md:pt-3">
                   <span>Total</span>
                   <span>₹{total.toFixed(2)}</span>
                 </div>
@@ -107,14 +107,14 @@ const Cart = () => {
 
               <button
                 onClick={() => navigate('/checkout')}
-                className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors mb-3"
+                className="w-full bg-black text-white py-2.5 md:py-3 rounded-lg font-semibold text-sm md:text-base hover:bg-gray-800 transition-colors mb-2 md:mb-3"
               >
                 PROCEED TO CHECKOUT
               </button>
 
               <Link
                 to="/crazy-deals"
-                className="block text-center text-sm text-purple-600 hover:text-purple-700 font-medium"
+                className="block text-center text-xs md:text-sm text-purple-600 hover:text-purple-700 font-medium"
               >
                 View Deals & Offers
               </Link>

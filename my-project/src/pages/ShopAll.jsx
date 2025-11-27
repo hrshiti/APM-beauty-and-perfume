@@ -470,19 +470,19 @@ const ShopAll = () => {
       </div>
 
       {/* Shop All Page Content */}
-      <div className="container mx-auto px-4 py-4 md:py-6">
+      <div className="container mx-auto px-3 md:px-4 py-3 md:py-4 lg:py-6 max-w-full overflow-x-hidden">
         {/* Tabs Row */}
-        <div className="flex items-center gap-1.5 md:gap-2 mb-3 md:mb-4">
+        <div className="flex items-center gap-1.5 md:gap-2 mb-3 md:mb-4 overflow-x-auto pb-2 scrollbar-hide">
           {/* SHOP ALL Tab - Active */}
           <button
             onClick={() => setActiveTab('SHOP ALL')}
-            className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm whitespace-nowrap transition ${
+            className={`flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 lg:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-[10px] md:text-xs lg:text-sm whitespace-nowrap transition flex-shrink-0 ${
               activeTab === 'SHOP ALL'
                 ? 'bg-black text-white'
                 : 'bg-gray-100 text-gray-600'
             }`}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
             <span>SHOP ALL</span>
@@ -491,9 +491,9 @@ const ShopAll = () => {
           {/* CRAZY DEALS Tab */}
           <Link
             to="/crazy-deals"
-            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm whitespace-nowrap transition bg-gray-100 text-gray-600"
+            className="flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 lg:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-[10px] md:text-xs lg:text-sm whitespace-nowrap transition bg-gray-100 text-gray-600 flex-shrink-0"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
             <span>CRAZY DEALS</span>
@@ -502,13 +502,13 @@ const ShopAll = () => {
           {/* BESTSELLERS Tab */}
           <button
             onClick={() => setActiveTab('BESTSELLERS')}
-            className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm whitespace-nowrap transition ${
+            className={`flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 lg:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-[10px] md:text-xs lg:text-sm whitespace-nowrap transition flex-shrink-0 ${
               activeTab === 'BESTSELLERS'
                 ? 'bg-black text-white'
                 : 'bg-gray-100 text-gray-600'
             }`}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
             <span>BESTSELLERS</span>
@@ -516,23 +516,23 @@ const ShopAll = () => {
         </div>
 
         {/* Page Header */}
-        <div className="mb-4 md:mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">SHOP ALL</h1>
+        <div className="mb-3 md:mb-4 lg:mb-6">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">SHOP ALL</h1>
         </div>
 
         {/* Products Grid */}
         <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
               {allProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition">
                   {/* Category Label */}
-                  <div className="px-3 pt-3 pb-1">
-                    <p className="text-xs text-gray-600 font-medium uppercase">{product.category}</p>
+                  <div className="px-2 md:px-3 pt-2 md:pt-3 pb-0.5 md:pb-1">
+                    <p className="text-[10px] md:text-xs text-gray-600 font-medium uppercase">{product.category}</p>
                   </div>
                   
                   {/* Product Image Container */}
-                  <div className="relative px-3 pb-2">
-                    <Link to={`/product/${product.id}`} className="block relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden group cursor-pointer">
+                  <div className="relative px-2 md:px-3 pb-1.5 md:pb-2">
+                    <Link to={`/product/${product.id}`} className="block relative w-full h-40 md:h-48 lg:h-56 bg-gray-50 rounded-xl overflow-hidden group cursor-pointer">
                       <img 
                         src={product.image} 
                         alt={product.name}
@@ -541,14 +541,14 @@ const ShopAll = () => {
                       
                       {/* BESTSELLER Badge - Top Left */}
                       {product.tag && (
-                        <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
+                        <span className="absolute top-1.5 md:top-2 left-1.5 md:left-2 bg-amber-700 text-white text-[10px] md:text-xs font-semibold px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 pointer-events-none">
                           {product.tag}
                         </span>
                       )}
                       
                       {/* Discount Badge - Bottom Left */}
                       {product.discount && (
-                        <span className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
+                        <span className="absolute bottom-1.5 md:bottom-2 left-1.5 md:left-2 bg-green-500 text-white text-[10px] md:text-xs font-semibold px-1.5 md:px-2 py-0.5 md:py-1 rounded z-10 pointer-events-none">
                           {product.discount}
                         </span>
                       )}
@@ -556,34 +556,34 @@ const ShopAll = () => {
                   </div>
                   
                   {/* Product Details */}
-                  <div className="px-3 pb-3">
+                  <div className="px-2 md:px-3 pb-2.5 md:pb-3">
                     {/* Product Name */}
                     <Link to={`/product/${product.id}`}>
-                      <h3 className="font-semibold text-sm text-gray-800 mb-2 line-clamp-2 min-h-[2.5rem] hover:text-purple-600 transition-colors cursor-pointer">
+                      <h3 className="font-semibold text-xs md:text-sm text-gray-800 mb-1.5 md:mb-2 line-clamp-2 min-h-[2.25rem] md:min-h-[2.5rem] hover:text-purple-600 transition-colors cursor-pointer">
                         {product.name}
                       </h3>
                     </Link>
                     
                     {/* Rating Section */}
-                    <div className="flex items-center gap-1 mb-2">
-                      <svg className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <div className="flex items-center gap-0.5 md:gap-1 mb-1.5 md:mb-2 flex-wrap">
+                      <svg className="w-3 h-3 md:w-4 md:h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
                         <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                       </svg>
-                      <span className="text-sm font-semibold text-gray-800">{product.rating}</span>
-                      <svg className="w-4 h-4 text-blue-500 fill-current" viewBox="0 0 20 20">
+                      <span className="text-xs md:text-sm font-semibold text-gray-800">{product.rating}</span>
+                      <svg className="w-3 h-3 md:w-4 md:h-4 text-blue-500 fill-current" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-xs text-gray-600">({(product.reviews / 1000).toFixed(1)}K Reviews)</span>
+                      <span className="text-[10px] md:text-xs text-gray-600">({(product.reviews / 1000).toFixed(1)}K Reviews)</span>
                     </div>
                     
                     {/* Pricing */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-lg font-bold text-black">₹{product.price}</span>
-                      <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                    <div className="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
+                      <span className="text-base md:text-lg font-bold text-black">₹{product.price}</span>
+                      <span className="text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                     </div>
                     
                     {/* Add to Cart Button */}
-                    <button className="w-full bg-black text-white py-2.5 rounded-md font-semibold text-sm hover:bg-gray-800 transition">
+                    <button className="w-full bg-black text-white py-2 md:py-2.5 rounded-md font-semibold text-xs md:text-sm hover:bg-gray-800 transition">
                       ADD TO CART
                     </button>
                   </div>
@@ -592,8 +592,8 @@ const ShopAll = () => {
             </div>
 
           {/* VIEW ALL Button */}
-          <div className="flex justify-center mt-6 md:mt-8">
-            <button className="border-2 border-black text-black bg-white px-8 py-3 rounded-md font-semibold hover:bg-gray-50 transition">
+          <div className="flex justify-center mt-4 md:mt-6 lg:mt-8">
+            <button className="border-2 border-black text-black bg-white px-6 md:px-8 py-2 md:py-3 rounded-md font-semibold text-sm md:text-base hover:bg-gray-50 transition">
               VIEW ALL
             </button>
           </div>

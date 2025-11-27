@@ -396,13 +396,13 @@ const Account = () => {
       </div>
 
       {/* Account Page Content */}
-      <div className="container mx-auto px-2 md:px-4 py-3 md:py-6 max-w-full overflow-hidden w-full">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-6 max-w-full overflow-hidden w-full">
         {/* User Profile Section */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden mb-3 md:mb-6">
-          <div className="p-2.5 md:p-6">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-4">
+        <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4 md:mb-6">
+          <div className="p-3 md:p-4 lg:p-6">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-4">
               {/* Profile Picture */}
-              <div className="w-14 h-14 md:w-24 md:h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-lg md:text-3xl font-bold shadow-lg flex-shrink-0">
+              <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xl md:text-2xl lg:text-3xl font-bold shadow-lg flex-shrink-0">
                 {displayUser.profileImage ? (
                   <img 
                     src={displayUser.profileImage} 
@@ -415,15 +415,15 @@ const Account = () => {
               </div>
 
               {/* User Details */}
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-sm md:text-2xl font-bold text-gray-800 mb-0 md:mb-1">{displayUser.name}</h2>
-                <p className="text-[11px] md:text-base text-gray-600 mb-0.5 md:mb-2">{displayUser.email}</p>
-                <p className="text-[10px] md:text-sm text-gray-500 mb-0 md:mb-1">{displayUser.phone}</p>
-                <p className="text-[9px] md:text-xs text-gray-400">Member since {displayUser.memberSince || 'January 2024'}</p>
+              <div className="flex-1 text-center md:text-left min-w-0">
+                <h2 className="text-base md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 md:mb-1 truncate">{displayUser.name}</h2>
+                <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-0.5 md:mb-1.5 truncate">{displayUser.email}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-0.5 md:mb-1">{displayUser.phone}</p>
+                <p className="text-[10px] md:text-xs text-gray-400">Member since {displayUser.memberSince || 'January 2024'}</p>
               </div>
 
               {/* Edit Profile Button */}
-              <button className="border-2 border-black text-black bg-white px-2.5 py-1 md:px-4 md:py-2 rounded-md font-semibold text-[10px] md:text-sm hover:bg-gray-50 transition whitespace-nowrap">
+              <button className="border-2 border-black text-black bg-white px-3 py-1.5 md:px-4 md:py-2 rounded-md font-semibold text-xs md:text-sm hover:bg-gray-50 transition whitespace-nowrap">
                 Edit Profile
               </button>
             </div>
@@ -436,20 +436,20 @@ const Account = () => {
             <button
               key={option.id}
               onClick={option.onClick}
-              className="bg-white rounded-xl shadow-md overflow-hidden p-3 md:p-6 hover:shadow-lg transition text-left group"
+              className="bg-white rounded-xl shadow-md overflow-hidden p-3 md:p-4 lg:p-6 hover:shadow-lg transition text-left group"
             >
-              <div className="flex items-start gap-2 md:gap-4">
+              <div className="flex items-start gap-2.5 md:gap-3 lg:gap-4">
                 {/* Icon */}
                 <div className="text-gray-700 group-hover:text-black transition flex-shrink-0">
                   {option.icon}
                 </div>
                 
                 {/* Content */}
-                <div className="flex-1">
-                  <h3 className="text-sm md:text-lg font-semibold text-gray-800 mb-0.5 md:mb-1">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-800 mb-0.5 md:mb-1">
                     {option.title}
                   </h3>
-                  <p className="text-[10px] md:text-sm text-gray-500">
+                  <p className="text-xs md:text-sm text-gray-500 line-clamp-2">
                     {option.description}
                   </p>
                 </div>

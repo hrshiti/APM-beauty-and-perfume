@@ -68,53 +68,53 @@ const Orders = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 flex flex-col">
-      <div className="flex-1 container mx-auto px-4 py-6 md:py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">My Orders</h1>
+      <div className="flex-1 container mx-auto px-3 md:px-4 py-4 md:py-6 md:py-8 max-w-full overflow-x-hidden">
+        <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 md:mb-6">My Orders</h1>
 
         {orders.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-            <svg className="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="text-center py-8 md:py-12 bg-white rounded-lg shadow-sm">
+            <svg className="w-16 h-16 md:w-24 md:h-24 mx-auto text-gray-300 mb-3 md:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">No orders yet</h2>
-            <p className="text-gray-600 mb-6">Start shopping to see your orders here</p>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1.5 md:mb-2">No orders yet</h2>
+            <p className="text-gray-600 text-sm md:text-base mb-4 md:mb-6">Start shopping to see your orders here</p>
             <Link
               to="/shop-all"
-              className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+              className="inline-block px-5 py-2.5 md:px-6 md:py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-sm md:text-base"
             >
               Start Shopping
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {orders.map((order) => (
               <Link
                 key={order.id}
                 to={`/orders/${order.id}`}
-                className="block bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
+                className="block bg-white rounded-lg shadow-sm p-4 md:p-6 hover:shadow-md transition-shadow"
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-2">
-                      <h3 className="font-bold text-lg">Order #{order.id}</h3>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-1.5 md:mb-2">
+                      <h3 className="font-bold text-base md:text-lg">Order #{order.id}</h3>
+                      <span className={`px-2.5 md:px-3 py-1 rounded-full text-[10px] md:text-xs font-semibold ${getStatusColor(order.status)}`}>
                         {order.status.toUpperCase()}
                       </span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-2">
+                    <p className="text-gray-600 text-xs md:text-sm mb-1 md:mb-2">
                       Placed on {new Date(order.date).toLocaleDateString('en-IN', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                       })}
                     </p>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 text-xs md:text-sm">
                       {order.items?.length || 0} item(s) • ₹{order.total?.toFixed(2) || '0.00'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-purple-600 font-semibold">View Details</span>
-                    <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="text-purple-600 font-semibold text-sm md:text-base">View Details</span>
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
