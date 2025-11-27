@@ -11,7 +11,7 @@ import img2725 from '../assets/images vintage/1.jpg';
 
 const CrazyDeals = () => {
   const navigate = useNavigate();
-  const { openCart, getItemCount } = useCartStore();
+  const { openCart, closeCart, getItemCount } = useCartStore();
   const { getCount: getWishlistCount } = useWishlistStore();
   const { isAuthenticated, user, logout } = useAuthStore();
   const [activeTab, setActiveTab] = useState('CRAZY DEALS');
@@ -975,19 +975,19 @@ const CrazyDeals = () => {
       {/* Bottom Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-[100] shadow-lg">
         <div className="flex items-center justify-around py-2">
-          <Link to="/" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+          <Link to="/" onClick={closeCart} className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
             <span className="text-xs font-medium">Home</span>
           </Link>
-          <Link to="/shop-all" className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
+          <Link to="/shop-all" onClick={closeCart} className="flex flex-col items-center gap-1 py-2 px-4 text-gray-600">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
             <span className="text-xs font-medium">Shop All</span>
           </Link>
-          <Link to="/crazy-deals" className="flex flex-col items-center gap-1 py-2 px-4 text-green-600">
+          <Link to="/crazy-deals" onClick={closeCart} className="flex flex-col items-center gap-1 py-2 px-4 text-green-600">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
