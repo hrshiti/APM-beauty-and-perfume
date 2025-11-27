@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import './App.css'
+import ScrollToTop from './components/common/ScrollToTop'
 import Admin from './module/Admin/Admin'
 import Home from './pages/Home'
 import ShopAll from './pages/ShopAll'
@@ -33,6 +34,7 @@ import CartDrawer from './components/cart/CartDrawer'
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col">
         <main className="flex-1">
           <Routes>
