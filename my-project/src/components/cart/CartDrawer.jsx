@@ -71,7 +71,7 @@ const CartDrawer = () => {
 
         {/* Footer with Summary */}
         {items.length > 0 && (
-          <div className="border-t border-gray-200 p-4 space-y-4 bg-gray-50">
+          <div className="border-t border-gray-200 p-4 space-y-4 bg-gray-50 pb-20 md:pb-4">
             {/* Coupon Section */}
             {!showCouponInput ? (
               <button
