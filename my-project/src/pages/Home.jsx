@@ -699,35 +699,37 @@ const Home = () => {
               
               {/* Product Image Container */}
               <div className="relative px-3 pb-2">
-                <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden">
+                <Link to={`/product/${product.id}`} className="block relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden group cursor-pointer">
                   <img 
                     src={product.image} 
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                   />
                   
                   {/* BESTSELLER Badge - Top Left */}
                   {product.tag && (
-                    <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+                    <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
                       {product.tag}
                     </span>
                   )}
                   
                   {/* Discount Badge - Bottom Left */}
                   {product.discount && (
-                    <span className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+                    <span className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
                       {product.discount}
                     </span>
                   )}
-                </div>
+                </Link>
               </div>
               
               {/* Product Details */}
               <div className="px-3 pb-3">
                 {/* Product Name */}
-                <h3 className="font-semibold text-sm text-gray-800 mb-2 line-clamp-2 min-h-[2.5rem]">
-                  {product.name}
-                </h3>
+                <Link to={`/product/${product.id}`}>
+                  <h3 className="font-semibold text-sm text-gray-800 mb-2 line-clamp-2 min-h-[2.5rem] hover:text-purple-600 transition-colors cursor-pointer">
+                    {product.name}
+                  </h3>
+                </Link>
                 
                 {/* Rating Section */}
                 <div className="flex items-center gap-1 mb-2">

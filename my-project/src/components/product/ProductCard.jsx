@@ -41,18 +41,18 @@ const ProductCard = ({ product }) => {
       </div>
       
       {/* Product Image Container */}
-      <Link to={`/product/${product.id}`} className="block relative px-3 pb-2">
-        <div className="relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden group">
+      <div className="relative px-3 pb-2">
+        <Link to={`/product/${product.id}`} className="block relative w-full h-48 md:h-56 bg-gray-50 rounded-xl overflow-hidden group cursor-pointer">
           <img 
             src={product.image || product.images?.[0]} 
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
           />
           
           {/* Wishlist Button */}
           <button
             onClick={handleWishlistToggle}
-            className={`absolute top-2 right-2 p-2 rounded-full transition-colors z-10 ${
+            className={`absolute top-2 right-2 p-2 rounded-full transition-colors z-20 ${
               inWishlist 
                 ? 'bg-red-500 text-white' 
                 : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -65,25 +65,25 @@ const ProductCard = ({ product }) => {
           
           {/* BESTSELLER Badge - Top Left */}
           {product.isBestSeller && (
-            <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+            <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
               BESTSELLER
             </span>
           )}
           
           {/* Discount Badge - Bottom Left */}
           {discountPercentage > 0 && (
-            <span className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+            <span className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
               {discountPercentage}% OFF
             </span>
           )}
-        </div>
-      </Link>
+        </Link>
+      </div>
       
       {/* Product Details */}
       <div className="px-3 pb-3">
         {/* Product Name */}
-        <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-sm text-gray-800 mb-2 line-clamp-2 min-h-[2.5rem] hover:text-purple-600 transition-colors">
+        <Link to={`/product/${product.id}`} className="block">
+          <h3 className="font-semibold text-sm text-gray-800 mb-2 line-clamp-2 min-h-[2.5rem] hover:text-purple-600 transition-colors cursor-pointer">
             {product.name}
           </h3>
         </Link>
