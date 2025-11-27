@@ -430,18 +430,26 @@ const Category = () => {
             <div className="px-4 pt-16 pb-4">
               {/* MY ORDERS & TRACK ORDER Buttons */}
               <div className="flex gap-2 mb-4">
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
-                </button>
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                </Link>
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
-                </button>
+                </Link>
               </div>
 
               {/* Category Shortcuts - Circular Icons */}

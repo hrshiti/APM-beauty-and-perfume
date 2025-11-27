@@ -1,7 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { orderService } from '../services/orderService';
+import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
+
+// Import images from assets vintage folder
+import img1 from '../assets/images vintage/1.jpg';
+import img2 from '../assets/images vintage/2.jpg';
+import img3 from '../assets/images vintage/3.jpg';
+import img4 from '../assets/images vintage/4.jpg';
+import img5 from '../assets/images vintage/5.jpg';
+import img6 from '../assets/images vintage/6.jpg';
+import img7 from '../assets/images vintage/7.jpg';
+import img8 from '../assets/images vintage/8-222.jpg';
+import img2_1 from '../assets/images vintage/2_1.jpg';
+import img3_1 from '../assets/images vintage/3_1.jpg';
+import img4_1 from '../assets/images vintage/4_1.jpg';
+import img5_1 from '../assets/images vintage/5_1.jpg';
+import img4_2 from '../assets/images vintage/4----2.jpg';
+import img6487 from '../assets/images vintage/IMG_6487.jpg';
+import img6503 from '../assets/images vintage/IMG_6503.jpg';
+import img9720 from '../assets/images vintage/IMG_9720.JPG';
+
+// Image mapping array - cycle through available images
+const imageArray = [img1, img2, img3, img4, img5, img6, img7, img8, img2_1, img3_1, img4_1, img5_1, img4_2, img6487, img6503, img9720];
+
+// Function to get image for order item
+const getOrderItemImage = (item, index) => {
+  // If item has image property, try to use it
+  if (item.image && item.image !== '' && item.image !== '/placeholder.jpg') {
+    return item.image;
+  }
+  
+  // If item has product with image
+  if (item.product?.image && item.product.image !== '' && item.product.image !== '/placeholder.jpg') {
+    return item.product.image;
+  }
+  
+  // Use index to cycle through available images
+  return imageArray[index % imageArray.length];
+};
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -64,8 +102,10 @@ const OrderDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 flex flex-col">
-      <div className="flex-1 container mx-auto px-3 md:px-4 py-4 md:py-6 md:py-8 max-w-full overflow-x-hidden">
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 flex flex-col pt-16">
+        <div className="flex-1 container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-full overflow-x-hidden">
         <Link
           to="/orders"
           className="inline-flex items-center text-purple-600 hover:text-purple-700 mb-4 md:mb-6 text-sm md:text-base"
@@ -109,20 +149,29 @@ const OrderDetail = () => {
             <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
               <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Order Items</h2>
               <div className="space-y-3 md:space-y-4">
-                {order.items?.map((item) => (
-                  <div key={item.id} className="flex gap-3 md:gap-4 pb-3 md:pb-4 border-b last:border-0">
-                    <img
-                      src={item.image || '/placeholder.jpg'}
-                      alt={item.name}
-                      className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg flex-shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-sm md:text-base mb-0.5 md:mb-1 line-clamp-2">{item.name}</h3>
-                      <p className="text-xs md:text-sm text-gray-600">Quantity: {item.quantity}</p>
-                      <p className="font-semibold mt-1.5 md:mt-2 text-sm md:text-base">₹{(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
+                {order.items?.map((item, idx) => {
+                  const itemImage = getOrderItemImage(item, idx);
+                  const itemName = item.name || item.product?.name || 'Product';
+                  
+                  return (
+                    <div key={item.id || idx} className="flex gap-3 md:gap-4 pb-3 md:pb-4 border-b last:border-0">
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                        <img
+                          src={itemImage}
+                          alt={itemName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm md:text-base mb-0.5 md:mb-1 line-clamp-2">{itemName}</h3>
+                        <p className="text-xs md:text-sm text-gray-600">Quantity: {item.quantity || 1}</p>
+                        <p className="font-semibold mt-1.5 md:mt-2 text-sm md:text-base">
+                          ₹{((parseFloat(item.price || item.product?.price || 0)) * (item.quantity || 1)).toFixed(2)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -166,9 +215,10 @@ const OrderDetail = () => {
             </div>
           </div>
         </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

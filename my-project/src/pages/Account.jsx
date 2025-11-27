@@ -4,6 +4,7 @@ import { useCartStore } from '../store/cartStore';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useAuthStore } from '../store/authStore';
 import { getMockCategories } from '../services/mockDataService';
+import toast from 'react-hot-toast';
 import img2711 from '../assets/images vintage/6.jpg';
 
 const Account = () => {
@@ -40,7 +41,7 @@ const Account = () => {
         </svg>
       ),
       description: "View and track your orders",
-      onClick: () => console.log("My Orders clicked")
+      onClick: () => navigate('/orders')
     },
     {
       id: 2,
@@ -51,7 +52,7 @@ const Account = () => {
         </svg>
       ),
       description: "Items you've saved for later",
-      onClick: () => console.log("My Wishlist clicked")
+      onClick: () => navigate('/wishlist')
     },
     {
       id: 3,
@@ -63,7 +64,7 @@ const Account = () => {
         </svg>
       ),
       description: "Manage your delivery addresses",
-      onClick: () => console.log("My Addresses clicked")
+      onClick: () => navigate('/addresses')
     },
     {
       id: 4,
@@ -74,7 +75,9 @@ const Account = () => {
         </svg>
       ),
       description: "Manage your payment options",
-      onClick: () => console.log("Payment Methods clicked")
+      onClick: () => {
+        toast.info('Payment methods feature coming soon!');
+      }
     },
     {
       id: 5,
@@ -85,7 +88,7 @@ const Account = () => {
         </svg>
       ),
       description: "View and manage your product reviews",
-      onClick: () => console.log("My Reviews clicked")
+      onClick: () => navigate('/reviews')
     },
     {
       id: 6,
@@ -96,7 +99,7 @@ const Account = () => {
         </svg>
       ),
       description: "Manage your notification preferences",
-      onClick: () => console.log("Notifications clicked")
+      onClick: () => navigate('/notifications')
     },
     {
       id: 7,
@@ -107,7 +110,7 @@ const Account = () => {
         </svg>
       ),
       description: "Get help with your account and orders",
-      onClick: () => console.log("Help & Support clicked")
+      onClick: () => navigate('/help-support')
     },
     {
       id: 8,
@@ -119,7 +122,7 @@ const Account = () => {
         </svg>
       ),
       description: "Account settings and preferences",
-      onClick: () => console.log("Settings clicked")
+      onClick: () => navigate('/settings')
     }
   ];
 
@@ -467,7 +470,14 @@ const Account = () => {
 
         {/* Logout Button */}
         <div className="mt-4 md:mt-6">
-          <button className="w-full bg-red-600 text-white py-2.5 md:py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-red-700 transition">
+          <button
+            onClick={() => {
+              logout();
+              navigate('/');
+              toast.success('Logged out successfully!');
+            }}
+            className="w-full bg-red-600 text-white py-2.5 md:py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-red-700 transition"
+          >
             Logout
           </button>
         </div>
@@ -520,18 +530,26 @@ const Account = () => {
             <div className="px-4 pt-16 pb-4">
               {/* MY ORDERS & TRACK ORDER Buttons */}
               <div className="flex gap-2 mb-4">
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <Link 
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
-                </button>
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                </Link>
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
-                </button>
+                </Link>
               </div>
 
               {/* Category Shortcuts - Circular Icons */}

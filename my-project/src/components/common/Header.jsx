@@ -35,6 +35,16 @@ const Header = () => {
     setIsSidebarCategoriesOpen(false);
   };
 
+  const handleMyOrdersClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeSidebar();
+    // Small delay to ensure sidebar closes before navigation
+    setTimeout(() => {
+      navigate('/orders');
+    }, 100);
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 w-full">
       {/* Main Header */}
@@ -210,15 +220,16 @@ const Header = () => {
       </header>
 
       {/* Sidebar Menu - Visible on all screens */}
-      <div className={`fixed left-0 w-80 bg-white z-50 overflow-y-auto shadow-2xl transition-transform duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} top-16 h-[calc(100vh-4rem)]`}>
+      <div className={`fixed left-0 top-16 w-80 bg-white z-[9999] shadow-2xl transition-transform duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} h-[calc(100vh-4rem)] flex flex-col`}>
+        <div className="overflow-y-auto flex-1">
         {/* Top Section - User Profile & Cashback */}
         <div className="px-4 pt-4 pb-4">
           {/* MY ORDERS & TRACK ORDER Buttons */}
           <div className="flex gap-2 mb-4">
             <Link 
-              to="/orders" 
+              to="/orders"
               onClick={closeSidebar}
-              className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+              className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition cursor-pointer"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -475,6 +486,7 @@ const Header = () => {
             </svg>
             <span className="flex-1 text-left text-sm font-semibold text-black">PERSONALISED PERFUMES</span>
           </button>
+        </div>
         </div>
       </div>
 

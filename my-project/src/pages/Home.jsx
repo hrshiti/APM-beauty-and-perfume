@@ -4,6 +4,7 @@ import { useCartStore } from '../store/cartStore';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useAuthStore } from '../store/authStore';
 import { getMockCategories } from '../services/mockDataService';
+import toast from 'react-hot-toast';
 
 // Import images from assets vintage folder
 import img2609 from '../assets/images vintage/1.jpg';
@@ -38,8 +39,8 @@ import img2732 from '../assets/images vintage/IMG_6487.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { openCart, getItemCount } = useCartStore();
-  const { getCount: getWishlistCount } = useWishlistStore();
+  const { addItem, openCart, getItemCount } = useCartStore();
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist, getCount: getWishlistCount } = useWishlistStore();
   const { isAuthenticated, user, logout } = useAuthStore();
   const [activeTab, setActiveTab] = useState('bestsellers');
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -278,12 +279,36 @@ const Home = () => {
       originalPrice: "899.00"
     }
   ];
-
-  const { addItem: addToCartStore } = useCartStore();
   
   // Add to cart function
   const addToCart = (product) => {
-    addToCartStore(product, 1);
+    // Convert price to number if it's a string
+    const productToAdd = {
+      ...product,
+      price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
+      originalPrice: product.originalPrice ? (typeof product.originalPrice === 'string' ? parseFloat(product.originalPrice) : product.originalPrice) : undefined
+    };
+    addItem(productToAdd, 1);
+    toast.success('Added to cart!');
+    openCart();
+  };
+
+  // Wishlist toggle function
+  const handleWishlistToggle = (product, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productToAdd = {
+      ...product,
+      price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
+      originalPrice: product.originalPrice ? (typeof product.originalPrice === 'string' ? parseFloat(product.originalPrice) : product.originalPrice) : undefined
+    };
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+      toast.success('Removed from wishlist');
+    } else {
+      addToWishlist(productToAdd);
+      toast.success('Added to wishlist');
+    }
   };
 
   // Remove from cart function
@@ -706,6 +731,20 @@ const Home = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                   />
                   
+                  {/* Wishlist Heart Icon - Top Right */}
+                  <button
+                    onClick={(e) => handleWishlistToggle(product, e)}
+                    className={`absolute top-2 right-2 p-1.5 md:p-2 rounded-full transition-colors z-20 ${
+                      isInWishlist(product.id)
+                        ? 'bg-red-500 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-100 shadow-sm'
+                    }`}
+                  >
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill={isInWishlist(product.id) ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
+                  
                   {/* BESTSELLER Badge - Top Left */}
                   {product.tag && (
                     <span className="absolute top-2 left-2 bg-amber-700 text-white text-xs font-semibold px-2 py-1 rounded z-10 pointer-events-none">
@@ -797,7 +836,7 @@ const Home = () => {
           </div>
 
           {/* Bottom Section - Perfume Bottles */}
-          <div className="bg-gray-100 px-3 md:px-6 py-3 md:py-4">
+          <Link to="/crazy-deals" className="block bg-gray-100 px-3 md:px-6 py-3 md:py-4 hover:bg-gray-200 transition-colors cursor-pointer">
             <div className="flex flex-row items-center justify-center gap-1 md:gap-2">
               {/* Left Bottle - OUD PARFUM */}
               <div className="flex flex-col items-center flex-1">
@@ -855,7 +894,7 @@ const Home = () => {
                 <p className="text-[7px] md:text-[9px] text-gray-600 text-center">100 ML | 3.4 fl. oz.</p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
@@ -1459,18 +1498,26 @@ const Home = () => {
             <div className="px-4 pt-16 pb-4">
               {/* MY ORDERS & TRACK ORDER Buttons */}
               <div className="flex gap-2 mb-4">
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
-                </button>
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                </Link>
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
-                </button>
+                </Link>
               </div>
 
               {/* Category Shortcuts - Circular Icons */}
@@ -1733,18 +1780,26 @@ const Home = () => {
             <div className="px-4 pt-16 pb-4">
               {/* MY ORDERS & TRACK ORDER Buttons */}
               <div className="flex gap-2 mb-4">
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">MY ORDERS</span>
-                </button>
-                <button className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                </Link>
+                <Link
+                  to="/orders"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
                   <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span className="text-sm font-bold text-gray-800">TRACK ORDER</span>
-                </button>
+                </Link>
               </div>
 
               {/* Category Shortcuts - Circular Icons */}
@@ -2056,13 +2111,26 @@ const Home = () => {
                     {/* Recommended Products */}
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide" style={{ maxWidth: '100%' }}>
                       {recommendedProducts.map((product) => (
-                        <div key={product.id} className="flex-shrink-0 w-40 bg-white border border-gray-200 rounded-xl overflow-hidden">
-                          <div className="w-full h-40 bg-gray-50 overflow-hidden">
+                        <div key={product.id} className="flex-shrink-0 w-40 bg-white border border-gray-200 rounded-xl overflow-hidden relative">
+                          <div className="w-full h-40 bg-gray-50 overflow-hidden relative">
                             <img 
                               src={product.image} 
                               alt={product.name}
                               className="w-full h-full object-cover"
                             />
+                            {/* Wishlist Heart Icon */}
+                            <button
+                              onClick={(e) => handleWishlistToggle(product, e)}
+                              className={`absolute top-2 right-2 p-1.5 rounded-full transition-colors z-20 ${
+                                isInWishlist(product.id)
+                                  ? 'bg-red-500 text-white' 
+                                  : 'bg-white text-gray-700 hover:bg-gray-100 shadow-sm'
+                              }`}
+                            >
+                              <svg className="w-4 h-4" fill={isInWishlist(product.id) ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                              </svg>
+                            </button>
                           </div>
                           <div className="p-3">
                             <h4 className="text-sm font-semibold text-gray-800 mb-2">{product.name}</h4>

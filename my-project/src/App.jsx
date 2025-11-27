@@ -16,6 +16,12 @@ import Orders from './pages/Orders'
 import OrderDetail from './pages/OrderDetail'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ComboDeals from './pages/ComboDeals'
+import Addresses from './pages/Addresses'
+import Settings from './pages/Settings'
+import Reviews from './pages/Reviews'
+import Notifications from './pages/Notifications'
+import HelpSupport from './pages/HelpSupport'
 import CartDrawer from './components/cart/CartDrawer'
 
 function App() {
@@ -28,6 +34,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/shop-all" element={<ShopAll />} />
             <Route path="/crazy-deals" element={<CrazyDeals />} />
+            <Route path="/combo-deals/:id" element={<ComboDeals />} />
             <Route path="/account" element={<Account />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
@@ -37,6 +44,11 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<OrderDetail />} />
+            <Route path="/addresses" element={<Addresses />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/help-support" element={<HelpSupport />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
