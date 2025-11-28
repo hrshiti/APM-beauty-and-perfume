@@ -4,10 +4,10 @@ import { useCartStore } from '../store/cartStore';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useAuthStore } from '../store/authStore';
 import { getMockCategories } from '../services/mockDataService';
-import img2711 from '../assets/images vintage/6.jpg';
+import img2711 from '../assets/6.jpg';
 
-// Import images from assets vintage folder
-import img2725 from '../assets/images vintage/1.jpg';
+// Import images from assets folder
+import img2725 from '../assets/1.jpg';
 
 const CrazyDeals = () => {
   const navigate = useNavigate();

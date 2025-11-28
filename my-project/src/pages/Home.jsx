@@ -6,36 +6,36 @@ import { useAuthStore } from '../store/authStore';
 import { getMockCategories } from '../services/mockDataService';
 import toast from 'react-hot-toast';
 
-// Import images from assets vintage folder
-import img2609 from '../assets/images vintage/1.jpg';
-import img2610 from '../assets/images vintage/2.jpg';
-import img2612 from '../assets/images vintage/3.jpg';
-import img2616 from '../assets/images vintage/4.jpg';
-import img2617 from '../assets/images vintage/5.jpg';
-import img2618 from '../assets/images vintage/6.jpg';
-import img2619 from '../assets/images vintage/7.jpg';
-import img2638 from '../assets/images vintage/8-222.jpg';
-import img2645 from '../assets/images vintage/2_1.jpg';
-import img2648 from '../assets/images vintage/3_1.jpg';
-import img2651 from '../assets/images vintage/4_1.jpg';
-import img2653 from '../assets/images vintage/5_1.jpg';
-import img2657 from '../assets/images vintage/4----2.jpg';
-import img2669 from '../assets/images vintage/IMG_6487.jpg';
-import img2698 from '../assets/images vintage/IMG_6503.jpg';
-import img2700 from '../assets/images vintage/IMG_9720.JPG';
-import img2702 from '../assets/images vintage/1.jpg';
-import img2703 from '../assets/images vintage/2.jpg';
-import img2705 from '../assets/images vintage/3.jpg';
-import img2707 from '../assets/images vintage/4.jpg';
-import img2709 from '../assets/images vintage/5.jpg';
-import img2711 from '../assets/images vintage/6.jpg';
-import img2719 from '../assets/images vintage/7.jpg';
-import img2721 from '../assets/images vintage/8-222.jpg';
-import img2723 from '../assets/images vintage/2_1.jpg';
-import img2725 from '../assets/images vintage/3_1.jpg';
-import img2727 from '../assets/images vintage/4_1.jpg';
-import img2728 from '../assets/images vintage/5_1.jpg';
-import img2732 from '../assets/images vintage/IMG_6487.jpg';
+// Import images from assets folder
+import img2609 from '../assets/1.jpg';
+import img2610 from '../assets/2.jpg';
+import img2612 from '../assets/3.jpg';
+import img2616 from '../assets/4.jpg';
+import img2617 from '../assets/5.jpg';
+import img2618 from '../assets/6.jpg';
+import img2619 from '../assets/7.jpg';
+import img2638 from '../assets/8-222.jpg';
+import img2645 from '../assets/2_1.jpg';
+import img2648 from '../assets/3_1.jpg';
+import img2651 from '../assets/4_1.jpg';
+import img2653 from '../assets/5_1.jpg';
+import img2657 from '../assets/4----2.jpg';
+import img2669 from '../assets/IMG_6487.jpg';
+import img2698 from '../assets/IMG_6503.jpg';
+import img2700 from '../assets/IMG_9720.JPG';
+import img2702 from '../assets/1.jpg';
+import img2703 from '../assets/2.jpg';
+import img2705 from '../assets/3.jpg';
+import img2707 from '../assets/4.jpg';
+import img2709 from '../assets/5.jpg';
+import img2711 from '../assets/6.jpg';
+import img2719 from '../assets/7.jpg';
+import img2721 from '../assets/8-222.jpg';
+import img2723 from '../assets/2_1.jpg';
+import img2725 from '../assets/3_1.jpg';
+import img2727 from '../assets/4_1.jpg';
+import img2728 from '../assets/5_1.jpg';
+import img2732 from '../assets/IMG_6487.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -1472,7 +1472,7 @@ const Home = () => {
               {/* Category Shortcuts - Circular Icons */}
               <div className="flex gap-3 justify-center">
                 {/* PERFUMES */}
-                <Link to="/category/perfumes" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                <Link to="/shop-all" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
                       src={img2711} 
@@ -1754,7 +1754,7 @@ const Home = () => {
               {/* Category Shortcuts - Circular Icons */}
               <div className="flex gap-3 justify-center">
                 {/* PERFUMES */}
-                <Link to="/category/perfumes" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
+                <Link to="/shop-all" onClick={() => setIsSidebarOpen(false)} className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center overflow-hidden shadow-md">
                     <img 
                       src={img2711} 

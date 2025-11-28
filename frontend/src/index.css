@@ -10,9 +10,8 @@
   display: none; /* Chrome, Safari and Opera */
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling - Lenis will handle this */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 

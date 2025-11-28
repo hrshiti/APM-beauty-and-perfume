@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/authStore';
 import BottomNavbar from './BottomNavbar';
 import logo from '../assets/logo vintage.png';
+import { fadeInUp, staggerContainer, staggerItem } from '../utils/animations';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -86,10 +88,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white pb-20 md:pb-0 flex items-center justify-center overflow-x-hidden">
-      <div className="w-full max-w-md px-4 md:px-6 py-8 md:py-12 overflow-x-hidden">
+    <motion.div 
+      className="min-h-screen bg-black text-white pb-20 md:pb-0 flex items-center justify-center overflow-x-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <motion.div 
+        className="w-full max-w-md px-4 md:px-6 py-8 md:py-12 overflow-x-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         {/* Logo and Brand */}
-        <div className="text-center mb-6 md:mb-8">
+        <motion.div 
+          className="text-center mb-6 md:mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className="flex items-center justify-center gap-2 md:gap-3 mb-4">
             {logo && (
               <img 
@@ -105,12 +123,26 @@ const Login = () => {
           <p className="text-gray-400 text-sm md:text-base">
             {step === 'phone' ? 'Login to your account' : 'Enter OTP to continue'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Login Form Card */}
-        <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl md:rounded-2xl p-4 md:p-8 border border-gray-800 shadow-xl overflow-x-hidden">
-          {step === 'phone' ? (
-            <form onSubmit={handlePhoneSubmit} className="space-y-5 md:space-y-6">
+        <motion.div 
+          className="bg-gradient-to-br from-gray-900 to-black rounded-xl md:rounded-2xl p-4 md:p-8 border border-gray-800 shadow-xl overflow-x-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <AnimatePresence mode="wait">
+            {step === 'phone' ? (
+              <motion.form 
+                key="phone"
+                onSubmit={handlePhoneSubmit} 
+                className="space-y-5 md:space-y-6"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+              >
               <div>
                 <label className="block text-sm md:text-base text-gray-400 mb-2">
                   Phone Number <span className="text-red-400">*</span>
@@ -132,10 +164,12 @@ const Login = () => {
                 </p>
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isLoading || phone.length !== 10}
                 className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-500 hover:from-[#F4D03F] hover:to-amber-400 disabled:from-gray-700 disabled:to-gray-600 disabled:cursor-not-allowed text-black font-bold px-6 py-3 md:py-4 rounded-lg text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {isLoading ? (
                   <>
@@ -153,17 +187,25 @@ const Login = () => {
                     <span>Send OTP</span>
                   </>
                 )}
-              </button>
-            </form>
+              </motion.button>
+            </motion.form>
           ) : (
-            <form onSubmit={handleOtpSubmit} className="space-y-5 md:space-y-6">
+            <motion.form 
+              key="otp"
+              onSubmit={handleOtpSubmit} 
+              className="space-y-5 md:space-y-6"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
               <div>
                 <label className="block text-sm md:text-base text-gray-400 mb-2">
                   Enter OTP <span className="text-red-400">*</span>
                 </label>
                 <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
                   {[0, 1, 2, 3, 4, 5].map((index) => (
-                    <input
+                    <motion.input
                       key={index}
                       type="text"
                       maxLength="1"
@@ -186,6 +228,10 @@ const Login = () => {
                         }
                       }}
                       className="w-10 h-10 md:w-14 md:h-14 bg-gray-800 border border-gray-700 rounded-lg text-center text-lg md:text-2xl font-bold text-white focus:outline-none focus:border-[#D4AF37] transition-colors flex-shrink-0"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      whileFocus={{ scale: 1.05 }}
                     />
                   ))}
                 </div>
@@ -215,10 +261,12 @@ const Login = () => {
                 </button>
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isLoading || otp.length !== 6}
                 className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-500 hover:from-[#F4D03F] hover:to-amber-400 disabled:from-gray-700 disabled:to-gray-600 disabled:cursor-not-allowed text-black font-bold px-6 py-3 md:py-4 rounded-lg text-base md:text-lg transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {isLoading ? (
                   <>
@@ -236,7 +284,7 @@ const Login = () => {
                     <span>Verify & Login</span>
                   </>
                 )}
-              </button>
+              </motion.button>
 
               <button
                 type="button"
@@ -250,8 +298,9 @@ const Login = () => {
               >
                 ← Change Phone Number
               </button>
-            </form>
+            </motion.form>
           )}
+          </AnimatePresence>
 
           {/* Divider */}
           <div className="my-6 md:my-8 flex items-center gap-4">
@@ -272,10 +321,15 @@ const Login = () => {
               Create New Account
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Back to Home */}
-        <div className="text-center mt-6">
+        <motion.div 
+          className="text-center mt-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <Link
             to="/"
             className="text-gray-400 hover:text-[#D4AF37] text-sm transition-colors inline-flex items-center gap-1"
@@ -285,11 +339,11 @@ const Login = () => {
             </svg>
             Back to Home
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <BottomNavbar />
-    </div>
+    </motion.div>
   );
 };
 

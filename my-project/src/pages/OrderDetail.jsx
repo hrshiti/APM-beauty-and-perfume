@@ -4,23 +4,23 @@ import { orderService } from '../services/orderService';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 
-// Import images from assets vintage folder
-import img1 from '../assets/images vintage/1.jpg';
-import img2 from '../assets/images vintage/2.jpg';
-import img3 from '../assets/images vintage/3.jpg';
-import img4 from '../assets/images vintage/4.jpg';
-import img5 from '../assets/images vintage/5.jpg';
-import img6 from '../assets/images vintage/6.jpg';
-import img7 from '../assets/images vintage/7.jpg';
-import img8 from '../assets/images vintage/8-222.jpg';
-import img2_1 from '../assets/images vintage/2_1.jpg';
-import img3_1 from '../assets/images vintage/3_1.jpg';
-import img4_1 from '../assets/images vintage/4_1.jpg';
-import img5_1 from '../assets/images vintage/5_1.jpg';
-import img4_2 from '../assets/images vintage/4----2.jpg';
-import img6487 from '../assets/images vintage/IMG_6487.jpg';
-import img6503 from '../assets/images vintage/IMG_6503.jpg';
-import img9720 from '../assets/images vintage/IMG_9720.JPG';
+// Import images from assets folder
+import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpg';
+import img3 from '../assets/3.jpg';
+import img4 from '../assets/4.jpg';
+import img5 from '../assets/5.jpg';
+import img6 from '../assets/6.jpg';
+import img7 from '../assets/7.jpg';
+import img8 from '../assets/8-222.jpg';
+import img2_1 from '../assets/2_1.jpg';
+import img3_1 from '../assets/3_1.jpg';
+import img4_1 from '../assets/4_1.jpg';
+import img5_1 from '../assets/5_1.jpg';
+import img4_2 from '../assets/4----2.jpg';
+import img6487 from '../assets/IMG_6487.jpg';
+import img6503 from '../assets/IMG_6503.jpg';
+import img9720 from '../assets/IMG_9720.JPG';
 
 // Image mapping array - cycle through available images
 const imageArray = [img1, img2, img3, img4, img5, img6, img7, img8, img2_1, img3_1, img4_1, img5_1, img4_2, img6487, img6503, img9720];

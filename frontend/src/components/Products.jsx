@@ -1,53 +1,125 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Toaster, toast } from 'react-hot-toast';
+import { fadeInUp, staggerContainer, staggerItem, buttonHover, cardHover } from '../utils/animations';
 import { allProducts } from '../data/productsData';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useCartStore } from '../store/cartStore';
 import BottomNavbar from './BottomNavbar';
 import logo from '../assets/logo vintage.png';
-// Import product images from assets
-import img1 from '../assets/images vintage/1.jpg';
-import img2 from '../assets/images vintage/2.jpg';
-import img3 from '../assets/images vintage/3.jpg';
-import img4 from '../assets/images vintage/4.jpg';
-import img5 from '../assets/images vintage/5.jpg';
-import img6 from '../assets/images vintage/6.jpg';
-import img7 from '../assets/images vintage/7.jpg';
-import img8 from '../assets/images vintage/8-222.jpg';
+// Import product images from assets folder
+import img1 from '../assets/IMG_2698.JPG';
+import img2 from '../assets/IMG_2700.JPG';
+import img3 from '../assets/IMG_2702.JPG';
+import img4 from '../assets/IMG_2703.JPG';
+import img5 from '../assets/IMG_2705.JPG';
+import img6 from '../assets/IMG_2707.JPG';
+import img7 from '../assets/IMG_2709.JPG';
+import img8 from '../assets/IMG_2711.JPG';
+import img9 from '../assets/IMG_2719.JPG';
+import img10 from '../assets/IMG_2721.JPG';
+import img11 from '../assets/IMG_2723.JPG';
+import img12 from '../assets/IMG_2725.JPG';
+import img13 from '../assets/IMG_2727.JPG';
+import img14 from '../assets/IMG_2728.JPG';
+import img15 from '../assets/IMG_2732.JPG';
+
+// Module-level cache to persist products across component unmounts
+let cachedProducts = null;
 
 const Products = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toggleItem, isInWishlist } = useWishlistStore();
   const { addItem, getItemCount } = useCartStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cartCount = getItemCount();
 
-  // Map images to products
-  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8];
+  // Get active navigation tab
+  const getActiveNavTab = () => {
+    if (location.pathname === '/') return 'Home';
+    if (location.pathname === '/products' || location.pathname.startsWith('/shop')) return 'Shop All';
+    if (location.pathname === '/deals' || location.pathname.startsWith('/combo-deals')) return 'Deals';
+    if (location.pathname === '/account') return 'Account';
+    return '';
+  };
+
+  const activeNavTab = getActiveNavTab();
+
+  // Map images to products (fallback if product doesn't have image)
+  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
 
   // Prepare products with images and formatted prices
-  const products = allProducts.map((product, index) => {
-    const image = productImages[index % productImages.length];
-    let price = '';
-    
-    if (product.price) {
-      price = `₹${product.price}`;
-    } else if (product.sizes && product.sizes.length > 0) {
-      // Use 100ml price (index 2) or first available size
-      const priceSize = product.sizes[2] || product.sizes[0];
-      price = `₹${priceSize.price}`;
-    } else {
-      price = '₹699';
+  // Use cached products if available, otherwise process allProducts
+  const [products, setProducts] = useState(() => {
+    // If we have cached products, use them immediately
+    if (cachedProducts && cachedProducts.length > 0) {
+      return cachedProducts;
     }
+    
+    // Otherwise, process allProducts
+    if (!allProducts || !Array.isArray(allProducts) || allProducts.length === 0) {
+      return [];
+    }
+    
+    const processedProducts = allProducts.map((product, index) => {
+      const image = product.image || productImages[index % productImages.length];
+      let price = '';
+      
+      if (product.price) {
+        price = `₹${product.price}`;
+      } else if (product.sizes && product.sizes.length > 0) {
+        // Use 100ml price (index 2) or first available size
+        const priceSize = product.sizes[2] || product.sizes[0];
+        price = `₹${priceSize.price}`;
+      } else {
+        price = '₹699';
+      }
 
-    return {
-      ...product,
-      image,
-      price,
-      displayPrice: price,
-    };
+      return {
+        ...product,
+        image: image || productImages[0],
+        price,
+        displayPrice: price,
+      };
+    });
+    
+    // Cache the processed products for future use
+    cachedProducts = processedProducts;
+    return processedProducts;
   });
+
+  // Update products if allProducts becomes available and products is empty
+  useEffect(() => {
+    if (allProducts && Array.isArray(allProducts) && allProducts.length > 0) {
+      // Only update if products is empty or cache is missing
+      if (products.length === 0 || !cachedProducts) {
+        const processedProducts = allProducts.map((product, index) => {
+          const image = product.image || productImages[index % productImages.length];
+          let price = '';
+          
+          if (product.price) {
+            price = `₹${product.price}`;
+          } else if (product.sizes && product.sizes.length > 0) {
+            const priceSize = product.sizes[2] || product.sizes[0];
+            price = `₹${priceSize.price}`;
+          } else {
+            price = '₹699';
+          }
+
+          return {
+            ...product,
+            image: image || productImages[0],
+            price,
+            displayPrice: price,
+          };
+        });
+        cachedProducts = processedProducts;
+        setProducts(processedProducts);
+      }
+    }
+  }, [allProducts, products.length]);
 
   const handleWishlistToggle = (product, e) => {
     if (e) {
@@ -88,7 +160,12 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden pb-20 md:pb-0">
+    <motion.div
+      className="min-h-screen bg-black text-white overflow-x-hidden pb-20 md:pb-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Toaster 
         position="top-center"
         toastOptions={{
@@ -102,7 +179,12 @@ const Products = () => {
         }}
       />
       {/* Navigation Bar */}
-      <nav className="w-full bg-black border-b border-gray-800 sticky top-0 z-50">
+      <motion.nav
+        className="w-full bg-black border-b border-gray-800 sticky top-0 z-50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
             {/* Hamburger Menu */}
@@ -130,11 +212,69 @@ const Products = () => {
               </h1>
             </div>
 
+            {/* Navigation Links - Desktop Only */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              <Link
+                to="/"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Home'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Home
+                {activeNavTab === 'Home' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/products"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Shop All'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Shop All
+                {activeNavTab === 'Shop All' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/deals"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Deals'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Deals
+                {activeNavTab === 'Deals' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/account"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Account'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Account
+                {activeNavTab === 'Account' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+            </nav>
+
             {/* Shopping Bag Icon */}
-            <button
+            <motion.button
               onClick={() => navigate('/cart')}
               className="p-2 hover:bg-gray-900 rounded-lg transition-colors relative"
               aria-label="Shopping Cart"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <svg className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -144,13 +284,18 @@ const Products = () => {
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               )}
-            </button>
+            </motion.button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Page Header */}
-      <div className="w-full bg-black border-b border-gray-800 py-6 md:py-8">
+      <motion.div
+        className="w-full bg-black border-b border-gray-800 py-6 md:py-8"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center">
             All Products
@@ -159,26 +304,41 @@ const Products = () => {
             Discover our complete collection
           </p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Products Grid */}
-      <section className="w-full bg-black py-8 md:py-12">
+      <motion.section
+        className="w-full bg-black py-8 md:py-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {products.map((product) => {
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {products && products.length > 0 ? products.map((product, index) => {
               const inWishlist = isInWishlist(product.id);
               
               return (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.id}`}
-                  className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer group relative block"
+                <motion.div
+                  key={product.id || index}
+                  variants={staggerItem}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  transition={{ duration: 0.2 }}
                 >
+                  <Link
+                    to={`/product/${product.id}`}
+                    className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group relative block"
+                  >
                   {/* Product Image */}
                   <div className="relative h-36 md:h-48 lg:h-56 bg-gray-800 overflow-hidden">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product.image || productImages[index % productImages.length] || productImages[0]}
+                      alt={product.name || 'Product'}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     
@@ -249,12 +409,17 @@ const Products = () => {
                       Add to Cart
                     </button>
                   </div>
-                </Link>
+                  </Link>
+                </motion.div>
               );
-            })}
-          </div>
+            }) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-400 text-lg">No products found</p>
+              </div>
+            )}
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
@@ -307,7 +472,7 @@ const Products = () => {
 
       {/* Bottom Navigation Bar - Mobile Only */}
       <BottomNavbar />
-    </div>
+    </motion.div>
   );
 };
 

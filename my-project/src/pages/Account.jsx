@@ -5,7 +5,7 @@ import { useWishlistStore } from '../store/wishlistStore';
 import { useAuthStore } from '../store/authStore';
 import { getMockCategories } from '../services/mockDataService';
 import toast from 'react-hot-toast';
-import img2711 from '../assets/images vintage/6.jpg';
+import img2711 from '../assets/6.jpg';
 
 const Account = () => {
   const navigate = useNavigate();

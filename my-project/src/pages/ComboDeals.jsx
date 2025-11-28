@@ -8,15 +8,15 @@ import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import toast from 'react-hot-toast';
 
-// Import images
-import img2616 from '../assets/images vintage/1.jpg';
-import img2617 from '../assets/images vintage/2.jpg';
-import img2618 from '../assets/images vintage/3.jpg';
-import img2619 from '../assets/images vintage/4.jpg';
-import img2638 from '../assets/images vintage/5.jpg';
-import img2645 from '../assets/images vintage/6.jpg';
-import img2648 from '../assets/images vintage/7.jpg';
-import img2651 from '../assets/images vintage/8-222.jpg';
+// Import images from assets folder
+import img2616 from '../assets/1.jpg';
+import img2617 from '../assets/2.jpg';
+import img2618 from '../assets/3.jpg';
+import img2619 from '../assets/4.jpg';
+import img2638 from '../assets/5.jpg';
+import img2645 from '../assets/6.jpg';
+import img2648 from '../assets/7.jpg';
+import img2651 from '../assets/8-222.jpg';
 
 const ComboDeals = () => {
   const navigate = useNavigate();
@@ -153,6 +153,15 @@ const ComboDeals = () => {
     return total;
   };
 
+  const calculateOriginalTotal = () => {
+    let originalTotal = 0;
+    selectedStep1Items.forEach(item => originalTotal += item.originalPrice);
+    selectedStep2Items.forEach(item => originalTotal += item.originalPrice);
+    return originalTotal;
+  };
+
+  const isTargetComplete = selectedStep1Items.length === 1 && selectedStep2Items.length >= 2;
+
   const handleProceedToCheckout = () => {
     if (selectedStep1Items.length === 0 || selectedStep2Items.length < 2) {
       toast.error('Please complete both steps');
@@ -171,6 +180,8 @@ const ComboDeals = () => {
   const selectedItems = currentStep === 1 ? selectedStep1Items : selectedStep2Items;
   const maxSelection = currentStep === 1 ? 1 : 2;
   const total = calculateTotal();
+  const originalTotal = calculateOriginalTotal();
+  const savings = originalTotal - total;
 
   return (
     <>
@@ -265,7 +276,7 @@ const ComboDeals = () => {
 
 
           {/* Products Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:gap-4 mb-20 md:mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:gap-4 mb-32 md:mb-8 pb-20 md:pb-0">
             {currentProducts.map((product) => {
               const isSelected = selectedItems.some(item => item.id === product.id);
               const canSelect = selectedItems.length < maxSelection;
@@ -375,37 +386,36 @@ const ComboDeals = () => {
             )}
           </div>
 
-          {/* Total Price Section */}
-          <div className="fixed bottom-0 left-0 right-0 md:relative md:bottom-auto bg-white border-t border-gray-200 md:border-0 md:bg-transparent py-2.5 md:py-4 px-3 md:px-0 md:mt-6 z-50 safe-area-inset-bottom">
-            <div className="container mx-auto flex items-center justify-between max-w-6xl">
-              <div className="flex items-center gap-2 md:gap-4">
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-lg overflow-hidden hidden md:block">
-                  <img 
-                    src={img2616} 
-                    alt="Combo"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="text-xs md:text-base font-semibold text-gray-800">Premium Perfume Combo</p>
-                  <p className="text-[10px] md:text-sm text-gray-600 hidden md:block">
-                    {selectedStep1Items.length} Gift Set{selectedStep1Items.length !== 1 ? 's' : ''} • {selectedStep2Items.length} Perfume{selectedStep2Items.length !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-base md:text-2xl font-bold text-black">Total: ₹{total.toLocaleString('en-IN')}/-</p>
-                {selectedStep1Items.length > 0 && selectedStep2Items.length >= 2 && (
+          {/* Total Price Section - Only show when target is complete */}
+          {isTargetComplete && (
+            <div className="flex justify-center my-6 md:my-8">
+              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 md:p-6 w-full max-w-md">
+                <div className="text-center">
+                  <h3 className="text-lg md:text-xl font-bold text-white mb-4">Ultimate Perfume Box</h3>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm md:text-base text-gray-300">Total:</span>
+                      <span className="text-xl md:text-2xl font-bold text-white">₹{total.toLocaleString('en-IN')}/-</span>
+                    </div>
+                    {savings > 0 && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs md:text-sm text-gray-400">You save</span>
+                        <span className="text-base md:text-lg font-bold text-[#D4AF37]">₹{savings.toLocaleString('en-IN')}!</span>
+                      </div>
+                    )}
+                  </div>
+
                   <button
                     onClick={handleProceedToCheckout}
-                    className="mt-1.5 md:mt-2 px-3 md:px-6 py-1.5 md:py-2.5 bg-black text-white rounded-lg font-semibold text-[10px] md:text-sm hover:bg-gray-800 transition-colors"
+                    className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-gray-900 px-6 py-3 rounded-lg font-bold text-sm md:text-base hover:from-[#F4D03F] hover:to-[#D4AF37] transition-all shadow-lg hover:shadow-xl"
                   >
                     Proceed to Checkout
                   </button>
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <Footer />
       </div>

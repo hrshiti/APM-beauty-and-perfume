@@ -7,7 +7,7 @@ import { getMockCategories } from '../services/mockDataService';
 import { productService } from '../services/productService';
 import ProductCard from '../components/product/ProductCard';
 import Footer from '../components/common/Footer';
-import img2711 from '../assets/images vintage/6.jpg';
+import img2711 from '../assets/6.jpg';
 
 const Category = () => {
   const { slug } = useParams();

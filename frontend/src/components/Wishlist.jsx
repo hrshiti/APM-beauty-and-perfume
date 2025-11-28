@@ -1,27 +1,46 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useCartStore } from '../store/cartStore';
 import logo from '../assets/logo vintage.png';
-// Import product images from assets
-import img1 from '../assets/images vintage/1.jpg';
-import img2 from '../assets/images vintage/2.jpg';
-import img3 from '../assets/images vintage/3.jpg';
-import img4 from '../assets/images vintage/4.jpg';
-import img5 from '../assets/images vintage/5.jpg';
-import img6 from '../assets/images vintage/6.jpg';
-import img7 from '../assets/images vintage/7.jpg';
-import img8 from '../assets/images vintage/8-222.jpg';
+// Import product images from assets folder
+import img1 from '../assets/IMG_2698.JPG';
+import img2 from '../assets/IMG_2700.JPG';
+import img3 from '../assets/IMG_2702.JPG';
+import img4 from '../assets/IMG_2703.JPG';
+import img5 from '../assets/IMG_2705.JPG';
+import img6 from '../assets/IMG_2707.JPG';
+import img7 from '../assets/IMG_2709.JPG';
+import img8 from '../assets/IMG_2711.JPG';
+import img9 from '../assets/IMG_2719.JPG';
+import img10 from '../assets/IMG_2721.JPG';
+import img11 from '../assets/IMG_2723.JPG';
+import img12 from '../assets/IMG_2725.JPG';
+import img13 from '../assets/IMG_2727.JPG';
+import img14 from '../assets/IMG_2728.JPG';
+import img15 from '../assets/IMG_2732.JPG';
 
 const Wishlist = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { items, removeItem, isInWishlist, toggleItem } = useWishlistStore();
   const { getItemCount } = useCartStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cartCount = getItemCount();
 
+  // Get active navigation tab
+  const getActiveNavTab = () => {
+    if (location.pathname === '/') return 'Home';
+    if (location.pathname === '/products' || location.pathname.startsWith('/shop')) return 'Shop All';
+    if (location.pathname === '/deals' || location.pathname.startsWith('/combo-deals')) return 'Deals';
+    if (location.pathname === '/account') return 'Account';
+    return '';
+  };
+
+  const activeNavTab = getActiveNavTab();
+
   // Map images to products
-  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8];
+  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
 
   // Prepare wishlist items with images and formatted prices
   const wishlistItems = items.map((product) => {
@@ -79,6 +98,62 @@ const Wishlist = () => {
                 VINTAGE BEAUTY
               </h1>
             </div>
+
+            {/* Navigation Links - Desktop Only */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              <Link
+                to="/"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Home'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Home
+                {activeNavTab === 'Home' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/products"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Shop All'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Shop All
+                {activeNavTab === 'Shop All' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/deals"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Deals'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Deals
+                {activeNavTab === 'Deals' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/account"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Account'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Account
+                {activeNavTab === 'Account' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+            </nav>
 
             {/* Shopping Bag Icon */}
             <button

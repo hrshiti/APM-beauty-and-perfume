@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { allProducts } from '../data/productsData';
 import { useWishlistStore } from '../store/wishlistStore';
 import { useCartStore } from '../store/cartStore';
 import Toast from './Toast';
 import logo from '../assets/logo vintage.png';
 import heroimg from '../assets/heroimg.png';
-// Import product images from assets
-import img1 from '../assets/images vintage/1.jpg';
-import img2 from '../assets/images vintage/2.jpg';
-import img3 from '../assets/images vintage/3.jpg';
-import img4 from '../assets/images vintage/4.jpg';
-import img5 from '../assets/images vintage/5.jpg';
-import img6 from '../assets/images vintage/6.jpg';
-import img7 from '../assets/images vintage/7.jpg';
-import img8 from '../assets/images vintage/8-222.jpg';
+import { pageVariants, containerVariants, itemVariants, buttonVariants, cardHoverVariants } from '../utils/pageAnimations';
+// Import product images from assets folder
+import img1 from '../assets/IMG_2698.JPG';
+import img2 from '../assets/IMG_2700.JPG';
+import img3 from '../assets/IMG_2702.JPG';
+import img4 from '../assets/IMG_2703.JPG';
+import img5 from '../assets/IMG_2705.JPG';
+import img6 from '../assets/IMG_2707.JPG';
+import img7 from '../assets/IMG_2709.JPG';
+import img8 from '../assets/IMG_2711.JPG';
+import img9 from '../assets/IMG_2719.JPG';
+import img10 from '../assets/IMG_2721.JPG';
+import img11 from '../assets/IMG_2723.JPG';
+import img12 from '../assets/IMG_2725.JPG';
+import img13 from '../assets/IMG_2727.JPG';
+import img14 from '../assets/IMG_2728.JPG';
+import img15 from '../assets/IMG_2732.JPG';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toggleItem, isInWishlist } = useWishlistStore();
   const { addItem, getItemCount } = useCartStore();
   const [quantity, setQuantity] = useState(1);
@@ -27,8 +37,19 @@ const ProductDetail = () => {
   const [toastMessage, setToastMessage] = useState('');
   const cartCount = getItemCount();
 
-  // Map images to products
-  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8];
+  // Get active navigation tab
+  const getActiveNavTab = () => {
+    if (location.pathname === '/') return 'Home';
+    if (location.pathname === '/products' || location.pathname.startsWith('/shop')) return 'Shop All';
+    if (location.pathname === '/deals' || location.pathname.startsWith('/combo-deals')) return 'Deals';
+    if (location.pathname === '/account') return 'Account';
+    return '';
+  };
+
+  const activeNavTab = getActiveNavTab();
+
+  // Map images to products (fallback)
+  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
 
   // Find the product by id
   const product = allProducts.find(p => p.id === id);
@@ -47,9 +68,9 @@ const ProductDetail = () => {
     );
   }
 
-  // Get product image
+  // Get product image - use product.image if available, otherwise fallback
   const productIndex = allProducts.findIndex(p => p.id === id);
-  const productImage = productImages[productIndex % productImages.length] || heroimg;
+  const productImage = product.image || productImages[productIndex % productImages.length] || heroimg;
 
   // Get price
   let price = '';
@@ -73,7 +94,7 @@ const ProductDetail = () => {
     .slice(0, 4)
     .map((p, index) => ({
       ...p,
-      image: productImages[(productIndex + index + 1) % productImages.length],
+      image: p.image || productImages[(productIndex + index + 1) % productImages.length],
     }));
 
   const handleQuantityChange = (delta) => {
@@ -88,9 +109,20 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden pb-24 md:pb-0">
+    <motion.div 
+      className="min-h-screen bg-black text-white overflow-x-hidden pb-24 md:pb-0"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+    >
       {/* Navigation Bar */}
-      <nav className="w-full bg-black border-b border-gray-800 sticky top-0 z-50">
+      <motion.nav 
+        className="w-full bg-black border-b border-gray-800 sticky top-0 z-50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
             {/* Back Button */}
@@ -118,6 +150,62 @@ const ProductDetail = () => {
               </h1>
             </div>
 
+            {/* Navigation Links - Desktop Only */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              <Link
+                to="/"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Home'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Home
+                {activeNavTab === 'Home' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/products"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Shop All'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Shop All
+                {activeNavTab === 'Shop All' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/deals"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Deals'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Deals
+                {activeNavTab === 'Deals' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+              <Link
+                to="/account"
+                className={`px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 relative ${
+                  activeNavTab === 'Account'
+                    ? 'text-[#D4AF37]'
+                    : 'text-gray-400 hover:text-[#D4AF37]'
+                }`}
+              >
+                Account
+                {activeNavTab === 'Account' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37]"></span>
+                )}
+              </Link>
+            </nav>
+
             {/* Shopping Bag Icon */}
             <button
               onClick={() => navigate('/cart')}
@@ -135,21 +223,34 @@ const ProductDetail = () => {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Product Image Section */}
-      <div className="w-full bg-black">
+      <motion.div 
+        className="w-full bg-black"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         <div className="flex justify-center items-center h-[400px] md:h-[500px] lg:h-[600px]">
-          <img
+          <motion.img
             src={productImage}
             alt={product.name}
-            className="w-full max-w-xs md:max-w-md lg:max-w-lg h-full object-contain"
+            className="w-full max-w-xs md:max-w-md lg:max-w-lg h-full object-contain rounded-2xl md:rounded-3xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Product Details Card */}
-      <div className="bg-[#3A2E1F] md:bg-[#4A3A2A] rounded-t-3xl md:rounded-t-[40px] -mt-8 md:-mt-12 relative z-10">
+      <motion.div 
+        className="bg-[#3A2E1F] md:bg-[#4A3A2A] rounded-t-3xl md:rounded-t-[40px] -mt-8 md:-mt-12 relative z-10"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
         <div className="container mx-auto px-4 md:px-6 py-6 md:py-8">
           {/* 4 Specification Boxes */}
           <div className="grid grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
@@ -253,7 +354,7 @@ const ProductDetail = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Fixed Bottom Bar - Quantity and Add to Cart */}
       <div className="fixed bottom-0 left-0 right-0 bg-[#3A2E1F] md:bg-[#4A3A2A] border-t border-gray-700 p-4 md:hidden z-50">
@@ -341,7 +442,7 @@ const ProductDetail = () => {
         isVisible={showToast}
         onClose={() => setShowToast(false)}
       />
-    </div>
+    </motion.div>
   );
 };
 

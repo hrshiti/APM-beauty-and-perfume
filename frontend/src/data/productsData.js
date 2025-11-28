@@ -1,3 +1,5 @@
+// Images will be handled in components to avoid import issues with spaces in folder names
+
 // Company Information
 export const companyInfo = {
   brand: "APM Beauty & Perfumery",
@@ -185,6 +187,38 @@ export const perfumes = [
     topNotes: ["Oud wood (Assam oud)", "Raspberry"],
     heartNotes: ["Saffron", "Incense", "Rose", "Geranium", "Birch", "Amberwood"],
     baseNotes: ["Benzoin tears", "Labdanum", "Amberwood", "Leather", "Woody accords"],
+    sizes: [
+      { size: "20ml", price: pricing["20ml"] },
+      { size: "30ml", price: pricing["30ml"] },
+      { size: "100ml", price: pricing["100ml"] },
+    ],
+  },
+  {
+    id: "royal-elixir",
+    name: "Royal Elixir",
+    category: "perfume",
+    type: "Eau de Parfum",
+    gender: "unisex",
+    description: "Luxurious and opulent fragrance with rich notes of amber, vanilla, and precious woods. Perfect for special occasions.",
+    topNotes: ["Bergamot", "Lemon", "Black Pepper"],
+    heartNotes: ["Rose", "Jasmine", "Cinnamon"],
+    baseNotes: ["Amber", "Vanilla", "Sandalwood", "Musk"],
+    sizes: [
+      { size: "20ml", price: pricing["20ml"] },
+      { size: "30ml", price: pricing["30ml"] },
+      { size: "100ml", price: pricing["100ml"] },
+    ],
+  },
+  {
+    id: "midnight-serenade",
+    name: "Midnight Serenade",
+    category: "perfume",
+    type: "Eau de Parfum",
+    gender: "unisex",
+    description: "Mysterious and seductive fragrance that captures the essence of midnight. Dark, sensual, and unforgettable.",
+    topNotes: ["Grapefruit", "Lavender", "Mint"],
+    heartNotes: ["Jasmine", "Lily", "Cedar"],
+    baseNotes: ["Patchouli", "Amber", "Musk", "Vanilla"],
     sizes: [
       { size: "20ml", price: pricing["20ml"] },
       { size: "30ml", price: pricing["30ml"] },

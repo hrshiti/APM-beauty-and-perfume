@@ -6,7 +6,7 @@ import { useWishlistStore } from '../store/wishlistStore';
 import { getMockCategories } from '../services/mockDataService';
 import toast from 'react-hot-toast';
 import Footer from '../components/common/Footer';
-import img2711 from '../assets/images vintage/6.jpg';
+import img2711 from '../assets/6.jpg';
 
 const Register = () => {
   const navigate = useNavigate();

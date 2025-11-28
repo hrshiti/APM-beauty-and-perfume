@@ -3,15 +3,22 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useOrderStore } from '../store/orderStore';
 import BottomNavbar from './BottomNavbar';
 import logo from '../assets/logo vintage.png';
-// Import product images
-import img1 from '../assets/images vintage/1.jpg';
-import img2 from '../assets/images vintage/2.jpg';
-import img3 from '../assets/images vintage/3.jpg';
-import img4 from '../assets/images vintage/4.jpg';
-import img5 from '../assets/images vintage/5.jpg';
-import img6 from '../assets/images vintage/6.jpg';
-import img7 from '../assets/images vintage/7.jpg';
-import img8 from '../assets/images vintage/8-222.jpg';
+// Import product images from assets folder
+import img1 from '../assets/IMG_2698.JPG';
+import img2 from '../assets/IMG_2700.JPG';
+import img3 from '../assets/IMG_2702.JPG';
+import img4 from '../assets/IMG_2703.JPG';
+import img5 from '../assets/IMG_2705.JPG';
+import img6 from '../assets/IMG_2707.JPG';
+import img7 from '../assets/IMG_2709.JPG';
+import img8 from '../assets/IMG_2711.JPG';
+import img9 from '../assets/IMG_2719.JPG';
+import img10 from '../assets/IMG_2721.JPG';
+import img11 from '../assets/IMG_2723.JPG';
+import img12 from '../assets/IMG_2725.JPG';
+import img13 from '../assets/IMG_2727.JPG';
+import img14 from '../assets/IMG_2728.JPG';
+import img15 from '../assets/IMG_2732.JPG';
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
@@ -32,11 +39,27 @@ const OrderSuccess = () => {
 
   const { orderId, orderItems, totalPrice, shipping, discount, finalTotal, paymentMethod, couponCode, deliveryAddress } = orderData;
 
-  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8];
+  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
 
   const getProductImage = (productId) => {
     const index = parseInt(productId) || 0;
     return productImages[index % productImages.length] || img1;
+  };
+
+  // Helper function to get safe image - handles old string paths
+  const getSafeImage = (itemImage, productImage) => {
+    if (typeof itemImage === 'string') {
+      if (itemImage.includes('images vintage') || itemImage.includes('images%20vintage')) {
+        return productImage;
+      }
+      if (itemImage.startsWith('http') || itemImage.startsWith('/') || itemImage.startsWith('../')) {
+        return itemImage;
+      }
+    }
+    if (itemImage && typeof itemImage === 'object') {
+      return itemImage;
+    }
+    return productImage;
   };
 
   // Save order when component mounts
@@ -45,7 +68,7 @@ const OrderSuccess = () => {
       const orderToSave = {
         items: orderItems.map(item => ({
           ...item,
-          image: item.image || getProductImage(item.id),
+          image: getSafeImage(item.image, getProductImage(item.id)),
           price: item.selectedPrice || item.price || 699
         })),
         itemsPrice: totalPrice,

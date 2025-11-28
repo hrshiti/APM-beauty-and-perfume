@@ -8,6 +8,7 @@ const BottomNavbar = () => {
   const getActiveTab = () => {
     if (location.pathname === '/') return 'Home';
     if (location.pathname === '/products' || location.pathname.startsWith('/shop')) return 'Shop All';
+    if (location.pathname === '/deals' || location.pathname.startsWith('/combo-deals')) return 'Deals';
     if (location.pathname === '/account') return 'Account';
     return 'Home';
   };

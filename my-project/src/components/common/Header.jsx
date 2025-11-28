@@ -6,8 +6,8 @@ import { useWishlistStore } from '../../store/wishlistStore';
 import { useSidebarStore } from '../../store/sidebarStore';
 import { getMockCategories } from '../../services/mockDataService';
 
-// Import images from assets vintage folder
-import img2723 from '../../assets/images vintage/6.jpg';
+// Import images from assets folder
+import img2723 from '../../assets/6.jpg';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -252,7 +252,7 @@ const Header = () => {
           {/* Category Shortcuts - Circular Icons */}
           <div className="flex gap-3 justify-center">
             {/* PERFUMES */}
-            <Link to="/category/perfumes" onClick={closeSidebar} className="flex flex-col items-center">
+            <Link to="/shop-all" onClick={closeSidebar} className="flex flex-col items-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center overflow-hidden shadow-md">
                 <img 
                   src={img2723} 
