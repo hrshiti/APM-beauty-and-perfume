@@ -8,22 +8,38 @@ import { useWishlistStore } from '../store/wishlistStore';
 import { useCartStore } from '../store/cartStore';
 import BottomNavbar from './BottomNavbar';
 import logo from '../assets/logo vintage.png';
-// Import product images from assets folder
+// Import product images from assets folder - Mix of model images and product images
 import img1 from '../assets/IMG_2698.JPG';
-import img2 from '../assets/IMG_2700.JPG';
+import img2 from '../assets/1.jpg';
 import img3 from '../assets/IMG_2702.JPG';
-import img4 from '../assets/IMG_2703.JPG';
+import img4 from '../assets/2.jpg';
 import img5 from '../assets/IMG_2705.JPG';
-import img6 from '../assets/IMG_2707.JPG';
+import img6 from '../assets/3.jpg';
 import img7 from '../assets/IMG_2709.JPG';
-import img8 from '../assets/IMG_2711.JPG';
+import img8 from '../assets/4.jpg';
 import img9 from '../assets/IMG_2719.JPG';
-import img10 from '../assets/IMG_2721.JPG';
+import img10 from '../assets/5.jpg';
 import img11 from '../assets/IMG_2723.JPG';
-import img12 from '../assets/IMG_2725.JPG';
+import img12 from '../assets/6.jpg';
 import img13 from '../assets/IMG_2727.JPG';
-import img14 from '../assets/IMG_2728.JPG';
+import img14 from '../assets/7.jpg';
 import img15 from '../assets/IMG_2732.JPG';
+import img16 from '../assets/8-222.jpg';
+import img17 from '../assets/IMG_2700.JPG';
+import img18 from '../assets/2_1.jpg';
+import img19 from '../assets/IMG_2703.JPG';
+import img20 from '../assets/3_1.jpg';
+import img21 from '../assets/IMG_2707.JPG';
+import img22 from '../assets/4_1.jpg';
+import img23 from '../assets/IMG_2711.JPG';
+import img24 from '../assets/5_1.jpg';
+import img25 from '../assets/IMG_2721.JPG';
+import img26 from '../assets/4----2.jpg';
+import img27 from '../assets/IMG_2725.JPG';
+import img28 from '../assets/IMG_6487.jpg';
+import img29 from '../assets/IMG_2728.JPG';
+import img30 from '../assets/IMG_6503.jpg';
+import img31 from '../assets/IMG_9720.JPG';
 
 // Module-level cache to persist products across component unmounts
 let cachedProducts = null;
@@ -47,8 +63,8 @@ const Products = () => {
 
   const activeNavTab = getActiveNavTab();
 
-  // Map images to products (fallback if product doesn't have image)
-  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15];
+  // Map images to products (fallback if product doesn't have image) - Mix of different product images
+  const productImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27, img28, img29, img30, img31];
 
   // Prepare products with images and formatted prices
   // Use cached products if available, otherwise process allProducts
