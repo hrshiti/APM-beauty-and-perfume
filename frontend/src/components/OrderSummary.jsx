@@ -343,18 +343,18 @@ const OrderSummary = () => {
               </div>
             </div>
           ) : (
-            <div className="flex gap-2 mb-4">
+            <div className="flex gap-2 mb-4 w-full min-w-0">
               <input
                 type="text"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
                 placeholder="Enter coupon code"
-                className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 md:py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] transition-colors"
+                className="flex-1 min-w-0 bg-gray-800 border border-gray-700 rounded-lg px-3 md:px-4 py-2 md:py-2.5 md:py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] transition-colors text-sm md:text-base"
                 onKeyPress={(e) => e.key === 'Enter' && handleApplyCoupon()}
               />
               <button
                 onClick={handleApplyCoupon}
-                className="bg-[#D4AF37] hover:bg-amber-500 text-black font-bold px-4 md:px-6 py-2.5 md:py-3 rounded-lg transition-all duration-300"
+                className="bg-[#D4AF37] hover:bg-amber-500 text-black font-bold px-3 md:px-6 py-2 md:py-2.5 md:py-3 rounded-lg transition-all duration-300 text-sm md:text-base whitespace-nowrap flex-shrink-0"
               >
                 Apply
               </button>

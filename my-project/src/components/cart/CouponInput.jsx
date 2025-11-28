@@ -23,26 +23,26 @@ const CouponInput = ({ onClose }) => {
   };
 
   return (
-    <div className="space-y-2">
-      <div className="flex gap-2">
+    <div className="space-y-2 w-full">
+      <div className="flex gap-2 w-full min-w-0">
         <input
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
           placeholder="Enter coupon code"
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
+          className="flex-1 min-w-0 px-2 md:px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
         />
         <button
           onClick={handleApply}
-          className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-semibold"
+          className="px-3 md:px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-semibold whitespace-nowrap flex-shrink-0"
         >
           Apply
         </button>
         <button
           onClick={onClose}
-          className="px-3 py-2 text-gray-600 hover:text-gray-800"
+          className="px-2 md:px-3 py-2 text-gray-600 hover:text-gray-800 flex-shrink-0"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
